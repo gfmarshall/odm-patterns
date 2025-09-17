@@ -1,5 +1,19 @@
 # ODM Development Workspace Rules
 
+## Execution Object Model (XOM) Development
+ID | Category | Rule
+--- | --- | ---
+ODM.XOM.001 | XOM Architecture | All projects must use a common, reusable Java XOM that serves as the foundation for multiple rule projects.
+ODM.XOM.002 | XOM Design | XOM classes must strictly follow domain-driven design principles with clear separation of concerns.
+ODM.XOM.003 | XOM Implementation | XOM must be implemented with immutable value objects where possible to ensure thread safety.
+ODM.XOM.004 | XOM Versioning | XOM classes must include versioning metadata to support backward compatibility as the model evolves.
+ODM.XOM.005 | XOM Packaging | XOM must be packaged separately from rule artifacts to allow independent versioning and deployment.
+ODM.XOM.006 | XOM Documentation | All XOM classes must include comprehensive JavaDoc with business context and usage examples.
+ODM.XOM.007 | XOM Validation | XOM classes must include built-in validation logic that can be leveraged by rule validation phases.
+ODM.XOM.008 | XOM Configuration | Configuration data must be externalized from the XOM using standardized loading mechanisms.
+ODM.XOM.009 | XOM Testing | XOM must include comprehensive unit tests covering all business methods and validation logic.
+ODM.XOM.010 | XOM Interfaces | XOM must provide stable interfaces that act as contracts between the implementation and rule authors.
+
 ## Ruleflow Design
 ID | Category | Rule
 --- | --- | ---

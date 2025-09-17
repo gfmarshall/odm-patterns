@@ -1,0 +1,4 @@
+code,description,activeFromISO,activeToISO
+HCC,Health Care Card,1900-01-01,9999-12-31
+PCC,Pensioner Concession Card,1900-01-01,9999-12-31
+DVA,Department of Veterans' Affairs Card,1900-01-01,9999-12-31
