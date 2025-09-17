@@ -1,0 +1,20 @@
+services:
+  odm:
+    image: ibmcom/odm:9.0.0.1_24.1.0
+    ports:
+      - "9060:9060"  # Application server HTTP transport
+      - "9453:9453"  # Application server HTTPS transport
+      - "9443:9443"  # Decision Server Console
+      - "9444:9444"  # Decision Center
+    environment:
+      - LICENSE=accept
+      - SAMPLE_USER=true
+      - ODM_ADMIN_USER=odmAdmin
+      - ODM_ADMIN_PASSWORD=odmAdmin
+    volumes:
+      # Map persistent storage for rule projects
+      - ./odm-data/decisioncenter:/config/decisioncenter
+      - ./odm-data/decisionserver/decisionrunner:/config/decisionserver/decisionrunner
+      - ./odm-data/decisionserver/decisionserverconsole:/config/decisionserver/decisionserverconsole
+      - ./odm-data/teamserver:/config/teamserver
+    restart: unless-stopped

@@ -1,0 +1,10 @@
+# ODM Data directories (persistent storage)
+odm-data/
+odm-config/
+
+# Logs
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
