@@ -1,6 +1,8 @@
 # ODM Data directories (persistent storage)
 odm-data/
 odm-config/
+miniloan/
+odm-on-cloud-getting-started/
 
 # Logs
 *.log

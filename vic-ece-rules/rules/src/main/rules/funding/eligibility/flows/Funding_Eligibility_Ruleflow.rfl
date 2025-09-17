@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.ruleflow:RuleFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.ruleflow="http://ilog.rules.studio/model/ruleflow.ecore">
+  <name>Funding_Eligibility_Ruleflow</name>
+  <uuid>4b6e89ca-3d18-4a5b-852f-3dcbf4f9bf29</uuid>
+  <locale>en_US</locale>
+  <categories>funding</categories>
+  <rfModel>
+  <tasks name="initialization" type="RuleTask">
+    <description>Initialize Response Object</description>
+    <task>initialization</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.flows.Flow_Control_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <tasks name="Input Validation" type="RuleTask">
+    <description>Validate All Request Inputs</description>
+    <task>funding-eligibility-validation</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.validation.Validation_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <tasks name="Validation Check" type="DecisionTask">
+    <description>Check Validation Results</description>
+  </tasks>
+  <tasks name="Age Eligibility" type="RuleTask">
+    <description>Check Age-Based Eligibility</description>
+    <task>funding-eligibility-age-check</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.criteria.Age_Eligibility_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <tasks name="Service Eligibility" type="RuleTask">
+    <description>Check Service Provider Eligibility</description>
+    <task>funding-eligibility-service-check</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.criteria.Service_Eligibility_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <tasks name="Program Rules" type="RuleTask">
+    <description>Apply Program-Specific Rules</description>
+    <task>funding-eligibility-program-specific</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.criteria.Program_Specific_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <tasks name="Supplement Eligibility" type="RuleTask">
+    <description>Check Supplement Eligibility</description>
+    <task>funding-eligibility-supplement-check</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.criteria.Supplement_Eligibility_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <tasks name="Output Preparation" type="RuleTask">
+    <description>Finalize Output Response</description>
+    <task>funding-eligibility-output</task>
+    <taskDefinition>
+      <ruleset>funding.eligibility.flows.Flow_Control_Rules</ruleset>
+    </taskDefinition>
+  </tasks>
+  <startNode>1</startNode>
+  <endNode>2</endNode>
+  <endNode>10</endNode>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="1" name="initialization" x="109" y="41">
+    <sourceLinks id="Link_1_8" targetNode="8"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="2" name="Validation Failure" x="325" y="214" termination="true"/>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="3" name="Age Eligibility" x="109" y="287">
+    <sourceLinks id="Link_3_5" targetNode="5"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="4" name="Validation Check" x="109" y="175">
+    <sourceLinks id="Link_4_3" targetNode="3">
+      <constraint><![CDATA[processingStatus != "ERROR"]]></constraint>
+    </sourceLinks>
+    <sourceLinks id="Link_4_2" targetNode="2">
+      <constraint><![CDATA[processingStatus == "ERROR"]]></constraint>
+    </sourceLinks>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="5" name="Service Eligibility" x="109" y="400">
+    <sourceLinks id="Link_5_6" targetNode="6"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="6" name="Program Rules" x="109" y="510">
+    <sourceLinks id="Link_6_7" targetNode="7"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="7" name="Supplement Eligibility" x="109" y="623">
+    <sourceLinks id="Link_7_9" targetNode="9"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="8" name="Input Validation" x="109" y="105">
+    <sourceLinks id="Link_8_4" targetNode="4"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="9" name="Output Preparation" x="109" y="733">
+    <sourceLinks id="Link_9_10" targetNode="10"/>
+  </nodes>
+  <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="10" name="End" x="109" y="843" termination="true"/>
+  </rfModel>
+</ilog.rules.studio.model.ruleflow:RuleFlow>

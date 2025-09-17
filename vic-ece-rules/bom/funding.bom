@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.bom:BOM xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.bom="http://ilog.rules.studio/model/bom.ecore">
+  <name>funding</name>
+  <uuid>81c23f4a-2dc4-4c8d-b985-19731546aa25</uuid>
+  <version>1.0</version>
+  <vocabularies>
+    <vocabularyRef>
+      <n>default</n>
+    </vocabularyRef>
+  </vocabularies>
+</ilog.rules.studio.model.bom:BOM>

@@ -1,0 +1,91 @@
+package funding.eligibility.flows;
+
+import funding.EligibilityRequest;
+import funding.EligibilityResponse;
+import funding.FundingDetermination;
+import funding.Child;
+import funding.Person;
+import funding.Service;
+import funding.Family;
+import funding.Guardian;
+import funding.FundingDetermination.EligibilityStatus;
+import funding.FundingDetermination.EligibilityResult;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+// IBM ODM Rule set for eligibility flow control
+ruleset Flow_Control_Rules {
+    // Rule for initializing response object
+    rule "Initialize Response" {
+        property "task" = "initialization"
+        property "priority" = 1000
+        
+        when {
+            $request: EligibilityRequest();
+            not { 
+                EligibilityResponse();
+            }
+        } then {
+            FundingDetermination determination = new FundingDetermination();
+            
+            // Initialize with base program type from request if present
+            if ($request.getApplication() != null && 
+                $request.getApplication().getRequestedBaseProgramType() != null) {
+                determination.setBaseProgramType($request.getApplication().getRequestedBaseProgramType());
+            }
+            
+            // Set effective dates (usually financial year)
+            LocalDate startDate = LocalDate.of($request.getFundingYear(), 7, 1);
+            LocalDate endDate = LocalDate.of($request.getFundingYear() + 1, 6, 30);
+            determination.setEffectiveFrom(startDate);
+            determination.setEffectiveTo(endDate);
+            
+            // Initialize response
+            EligibilityResponse response = new EligibilityResponse(determination);
+            response.setProcessingStatus("IN_PROGRESS");
+            response.setRequestId(UUID.randomUUID().toString());
+            response.setTimestamp(LocalDateTime.now().toString());
+            
+            insert(determination);
+            insert(response);
+            
+            System.out.println("Eligibility response initialized with ID: " + response.getRequestId());
+        }
+    }
+    
+    // Rule for handling validation failures
+    rule "Input Validation Failure" {
+        property "task" = "validation-check"
+        property "priority" = 900
+        
+        when {
+            $response: EligibilityResponse($response.getProcessingStatus().equals("ERROR"));
+        } then {
+            System.out.println("Validation failure detected, terminating rule execution");
+            // In IBM ODM, we use the technical rule to halt execution
+        }
+    }
+    
+    // Rule for finalizing response
+    rule "Finalize Response" {
+        property "task" = "funding-eligibility-output"
+        property "priority" = -1000
+        
+        when {
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+            $determination: FundingDetermination();
+        } then {
+            // Set final status based on eligibility results
+            $response.setProcessingStatus("SUCCESS");
+            
+            // Set primary program
+            if ($determination.getBaseProgramType() != null) {
+                $response.setPrimaryProgram($determination.getBaseProgramType().toString());
+            }
+            
+            System.out.println("Eligibility determination completed successfully");
+        }
+    }
+}

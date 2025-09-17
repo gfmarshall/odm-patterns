@@ -1,0 +1,69 @@
+// IBM ODM IRL Rule: Input Validation Rules
+
+definitions
+    use funding.EligibilityRequest;
+    use funding.EligibilityResponse;
+    use funding.Child;
+    use funding.Service;
+end
+
+rule ValidateChildRequired {
+    property "jes:ruleset" = "funding.eligibility";
+    property "jes:task" = "funding-eligibility-validation";
+    property "priority" = 100;
+    
+    when {
+        request: EligibilityRequest() where request.getChild() == null;
+        response: EligibilityResponse() where response.getProcessingStatus() == "IN_PROGRESS";
+    } then {
+        response.setProcessingStatus("ERROR");
+        response.setErrorMessage("Missing required input: child information");
+        print("Validation error: Missing child information");
+    }
+}
+
+rule ValidateServiceRequired {
+    property "jes:ruleset" = "funding.eligibility";
+    property "jes:task" = "funding-eligibility-validation";
+    property "priority" = 90;
+    
+    when {
+        request: EligibilityRequest() where request.getService() == null;
+        response: EligibilityResponse() where response.getProcessingStatus() == "IN_PROGRESS";
+    } then {
+        response.setProcessingStatus("ERROR");
+        response.setErrorMessage("Missing required input: service information");
+        print("Validation error: Missing service information");
+    }
+}
+
+rule ValidateChildDateOfBirthRequired {
+    property "jes:ruleset" = "funding.eligibility";
+    property "jes:task" = "funding-eligibility-validation";
+    property "priority" = 80;
+    
+    when {
+        request: EligibilityRequest() where request.getChild() != null;
+        child: Child() from request.getChild() where child.getDateOfBirth() == null;
+        response: EligibilityResponse() where response.getProcessingStatus() == "IN_PROGRESS";
+    } then {
+        response.setProcessingStatus("ERROR");
+        response.setErrorMessage("Missing required input: child date of birth");
+        print("Validation error: Missing child date of birth");
+    }
+}
+
+rule ValidateFundingYearRange {
+    property "jes:ruleset" = "funding.eligibility";
+    property "jes:task" = "funding-eligibility-validation";
+    property "priority" = 70;
+    
+    when {
+        request: EligibilityRequest() where request.getFundingYear() < 2020 or request.getFundingYear() > 2040;
+        response: EligibilityResponse() where response.getProcessingStatus() == "IN_PROGRESS";
+    } then {
+        response.setProcessingStatus("ERROR");
+        response.setErrorMessage("Invalid funding year: " + request.getFundingYear() + ". Must be between 2020-2040");
+        print("Validation error: Invalid funding year: " + request.getFundingYear());
+    }
+}

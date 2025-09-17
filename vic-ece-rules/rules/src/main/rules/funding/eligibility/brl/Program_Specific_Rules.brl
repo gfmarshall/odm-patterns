@@ -1,0 +1,106 @@
+package funding.eligibility.criteria;
+
+import funding.EligibilityRequest;
+import funding.EligibilityResponse;
+import funding.FundingDetermination;
+import funding.Child;
+import funding.Service;
+import funding.FundingDetermination.EligibilityStatus;
+import funding.FundingDetermination.EligibilityResult;
+import funding.Child.BaseProgramType;
+
+// IBM ODM Rule set for program-specific eligibility rules
+ruleset Program_Specific_Rules {
+    // Rule for setting Three Year Old Kindergarten service hours
+    rule "Check Three Year Old Kindergarten Service Hours" {
+        property "task" = "funding-eligibility-program-specific"
+        
+        when {
+            $request: EligibilityRequest();
+            $service: Service() from $request.getService();
+            $determination: FundingDetermination($determination.getBaseProgramType() == BaseProgramType.THREE_YEAR_OLD_KINDER);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+            
+            // Check if service has THREE_YEAR_OLD cohort hours defined
+            eval($service.getPrePrepHoursByCohort().containsKey("THREE_YEAR_OLD") || 
+                 $service.getPrePrepHoursByCohort().containsKey("UNIVERSAL"));
+        } then {
+            // Calculate hours based on funding year
+            int standardHours = 5; // Default for 2023
+            if ($request.getFundingYear() == 2024) {
+                standardHours = 7;
+            } else if ($request.getFundingYear() >= 2025) {
+                standardHours = 10;
+            }
+            
+            // Set hours in determination
+            $determination.setHoursPerWeekApproved(standardHours);
+            $determination.setWeeksPerYear(40);
+            
+            System.out.println("THREE_YEAR_OLD_KINDER hours set to " + standardHours + " per week");
+        }
+    }
+    
+    // Rule for setting Pre-Prep service hours
+    rule "Check Pre-Prep Service Hours" {
+        property "task" = "funding-eligibility-program-specific"
+        
+        when {
+            $request: EligibilityRequest();
+            $service: Service() from $request.getService();
+            $determination: FundingDetermination($determination.getBaseProgramType() == BaseProgramType.PRE_PREP);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+            
+            // Check if service has PRE_PREP cohort hours defined
+            eval($service.getPrePrepHoursByCohort().containsKey("PRE_PREP") || 
+                 $service.getPrePrepHoursByCohort().containsKey("UNIVERSAL"));
+        } then {
+            // Calculate hours - fixed at 15 hours
+            int standardHours = 15; 
+            
+            // Set hours in determination
+            $determination.setHoursPerWeekApproved(standardHours);
+            $determination.setWeeksPerYear(40);
+            
+            System.out.println("PRE_PREP hours set to " + standardHours + " per week");
+        }
+    }
+    
+    // Rule for applying ESK hours increase
+    rule "Apply ESK Hours Increase" {
+        property "task" = "funding-eligibility-program-specific"
+        property "priority" = -100 // Run after standard hour calculation
+        
+        when {
+            $request: EligibilityRequest();
+            $determination: FundingDetermination($determination.hasSupplementCode("ESK") && 
+                                              $determination.getHoursPerWeekApproved() < 15);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            // ESK increases hours to 15 hours per week
+            $determination.setHoursPerWeekApproved(15);
+            
+            System.out.println("Applied ESK hours increase to 15 hours per week");
+        }
+    }
+    
+    // Rule for applying Inclusion Support hours
+    rule "Apply Inclusion Support Hours" {
+        property "task" = "funding-eligibility-program-specific"
+        property "priority" = -110 // Run after ESK hour calculation
+        
+        when {
+            $request: EligibilityRequest();
+            $determination: FundingDetermination($determination.hasSupplementCode("INCLUSION"));
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            // Add 5 additional hours for inclusion support, up to a maximum of 15
+            int currentHours = $determination.getHoursPerWeekApproved();
+            int newHours = Math.min(currentHours + 5, 15);
+            
+            $determination.setHoursPerWeekApproved(newHours);
+            
+            System.out.println("Applied inclusion support hours: added additional hours up to maximum 15");
+        }
+    }
+}

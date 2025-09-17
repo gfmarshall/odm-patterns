@@ -1,0 +1,126 @@
+package funding.eligibility.criteria;
+
+import funding.EligibilityRequest;
+import funding.EligibilityResponse;
+import funding.FundingDetermination;
+import funding.Child;
+import funding.FundingDetermination.EligibilityStatus;
+import funding.FundingDetermination.EligibilityResult;
+import funding.Child.BaseProgramType;
+
+import java.time.LocalDate;
+
+// Ruleflow group for age eligibility checks
+ruleflow-group "funding-eligibility-age-check"
+
+rule "Check Three Year Old Kindergarten Age Eligibility"
+    no-loop true
+    when
+        $request : EligibilityRequest(child != null, fundingYear > 0)
+        $child : Child() from $request.getChild()
+        $determination : FundingDetermination(baseProgramType == BaseProgramType.THREE_YEAR_OLD_KINDER || baseProgramType == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Calculate age on April 30 of the program year
+        eval(calculateAgeOnReferenceDate($child, $request.getProgramYear(), 4, 30) >= 3)
+        eval(calculateAgeOnReferenceDate($child, $request.getProgramYear(), 4, 30) < 5)
+    then
+        // Create eligibility result for THREE_YEAR_OLD_KINDER
+        EligibilityResult result = new EligibilityResult("THREE_YEAR_OLD_KINDER", EligibilityStatus.ELIGIBLE);
+        result.addReason("Child will be between 3 and 4 years old on April 30 of the program year");
+        result.addPolicyRef("AGE_ELIGIBILITY_POLICY_1.2");
+        
+        modify($determination) {
+            setBaseProgramType(BaseProgramType.THREE_YEAR_OLD_KINDER),
+            addEligibilityResult(result)
+        }
+        
+        System.out.println("Child is age-eligible for Three Year Old Kindergarten");
+end
+
+rule "Check Pre-Prep Age Eligibility"
+    no-loop true
+    when
+        $request : EligibilityRequest(child != null, fundingYear > 0)
+        $child : Child() from $request.getChild()
+        $determination : FundingDetermination(baseProgramType == BaseProgramType.PRE_PREP || baseProgramType == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Calculate age on April 30 of the program year
+        eval(calculateAgeOnReferenceDate($child, $request.getProgramYear(), 4, 30) >= 4)
+        eval(calculateAgeOnReferenceDate($child, $request.getProgramYear(), 4, 30) < 6)
+    then
+        // Create eligibility result for PRE_PREP
+        EligibilityResult result = new EligibilityResult("PRE_PREP", EligibilityStatus.ELIGIBLE);
+        result.addReason("Child will be between 4 and 5 years old on April 30 of the program year");
+        result.addPolicyRef("AGE_ELIGIBILITY_POLICY_2.1");
+        
+        modify($determination) {
+            setBaseProgramType(BaseProgramType.PRE_PREP),
+            addEligibilityResult(result)
+        }
+        
+        System.out.println("Child is age-eligible for Pre-Prep");
+end
+
+rule "Child Too Young For Any Program"
+    no-loop true
+    when
+        $request : EligibilityRequest(child != null, fundingYear > 0)
+        $child : Child() from $request.getChild()
+        $determination : FundingDetermination()
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Check if child is too young for any program
+        eval(calculateAgeOnReferenceDate($child, $request.getProgramYear(), 4, 30) < 3)
+    then
+        // Create ineligible results for both programs
+        EligibilityResult result1 = new EligibilityResult("THREE_YEAR_OLD_KINDER", EligibilityStatus.INELIGIBLE);
+        result1.addReason("Child will be younger than 3 years old on April 30 of the program year");
+        
+        EligibilityResult result2 = new EligibilityResult("PRE_PREP", EligibilityStatus.INELIGIBLE);
+        result2.addReason("Child will be younger than 4 years old on April 30 of the program year");
+        
+        modify($determination) {
+            addEligibilityResult(result1),
+            addEligibilityResult(result2)
+        }
+        
+        System.out.println("Child is too young for any kindergarten program");
+end
+
+rule "Child Too Old For Any Program"
+    no-loop true
+    when
+        $request : EligibilityRequest(child != null, fundingYear > 0)
+        $child : Child() from $request.getChild()
+        $determination : FundingDetermination()
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Check if child is too old for any program
+        eval(calculateAgeOnReferenceDate($child, $request.getProgramYear(), 4, 30) >= 6)
+    then
+        // Create ineligible results for both programs
+        EligibilityResult result1 = new EligibilityResult("THREE_YEAR_OLD_KINDER", EligibilityStatus.INELIGIBLE);
+        result1.addReason("Child will be 6 years or older on April 30 of the program year");
+        
+        EligibilityResult result2 = new EligibilityResult("PRE_PREP", EligibilityStatus.INELIGIBLE);
+        result2.addReason("Child will be 6 years or older on April 30 of the program year");
+        
+        modify($determination) {
+            addEligibilityResult(result1),
+            addEligibilityResult(result2)
+        }
+        
+        System.out.println("Child is too old for any kindergarten program");
+end
+
+// Helper function to calculate age on reference date
+function int calculateAgeOnReferenceDate(Child child, int year, int month, int day) {
+    if (child == null || child.getDateOfBirth() == null) {
+        return -1;
+    }
+    
+    LocalDate referenceDate = LocalDate.of(year, month, day);
+    return child.getAgeAt(referenceDate);
+}

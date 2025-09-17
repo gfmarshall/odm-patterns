@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.dt:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.dt="http://ilog.rules.studio/model/dt.ecore">
+  <name>Hours_Entitlement_Table</name>
+  <uuid>c4e45cab-4d18-4a5b-852f-3dcbf4f9bf31</uuid>
+  <locale>en_US</locale>
+  <definition>
+<DT xmlns="http://schemas.ilog.com/Rules/7.0/DecisionTable" Version="7.0">
+  <Body>
+    <Properties>
+      <Property Name="Lock.ApplyLocking" Type="xs:boolean"><![CDATA[false]]></Property>
+      <Property Name="Lock.LockName" Type="xs:string"><![CDATA[Locked by admin]]></Property>
+      <Property Name="UI.ShowRules" Type="xs:boolean"><![CDATA[true]]></Property>
+    </Properties>
+    <Structure>
+      <ConditionDefinitions>
+        <ConditionDefinition Id="C0">
+          <ExpressionDefinition>
+            <Text><![CDATA[the program type of 'decision' is <program type>]]></Text>
+          </ExpressionDefinition>
+        </ConditionDefinition>
+        <ConditionDefinition Id="C1">
+          <ExpressionDefinition>
+            <Text><![CDATA[the effective date <is in range> effective from to effective to]]></Text>
+          </ExpressionDefinition>
+        </ConditionDefinition>
+      </ConditionDefinitions>
+      <ActionDefinitions>
+        <ActionDefinition Id="A0">
+          <ExpressionDefinition>
+            <Text><![CDATA[set 'standard hours' of 'hours entitlement' to <standard hours>]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+        <ActionDefinition Id="A1">
+          <ExpressionDefinition>
+            <Text><![CDATA[set 'ESK hours' of 'hours entitlement' to <ESK hours>]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+        <ActionDefinition Id="A2">
+          <ExpressionDefinition>
+            <Text><![CDATA[set 'inclusion additional hours' of 'hours entitlement' to <inclusion hours>]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+        <ActionDefinition Id="A3">
+          <ExpressionDefinition>
+            <Text><![CDATA[set 'maximum hours' of 'hours entitlement' to <max hours>]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+        <ActionDefinition Id="A4">
+          <ExpressionDefinition>
+            <Text><![CDATA[add <policy reference> to the policy references of 'hours entitlement']]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+      </ActionDefinitions>
+    </Structure>
+    <Contents>
+      <Partition DefId="C0">
+        <Condition>
+          <Expression>
+            <Param><![CDATA["THREE_YEAR_OLD_KINDER"]]></Param>
+          </Expression>
+          <Partition DefId="C1">
+            <Condition>
+              <Expression>
+                <Param><![CDATA["2023-07-01"]]></Param>
+                <Param><![CDATA["2024-06-30"]]></Param>
+              </Expression>
+              <ActionSet>
+                <Action DefId="A0">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A1">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A2">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A3">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A4">
+                  <Expression>
+                    <Param><![CDATA["HOURS_POLICY_1.1_2023"]]></Param>
+                  </Expression>
+                </Action>
+              </ActionSet>
+            </Condition>
+            <Condition>
+              <Expression>
+                <Param><![CDATA["2024-07-01"]]></Param>
+                <Param><![CDATA["2025-06-30"]]></Param>
+              </Expression>
+              <ActionSet>
+                <Action DefId="A0">
+                  <Expression>
+                    <Param><![CDATA[7.5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A1">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A2">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A3">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A4">
+                  <Expression>
+                    <Param><![CDATA["HOURS_POLICY_1.1_2024"]]></Param>
+                  </Expression>
+                </Action>
+              </ActionSet>
+            </Condition>
+            <Condition>
+              <Expression>
+                <Param><![CDATA["2025-07-01"]]></Param>
+                <Param><![CDATA["2026-06-30"]]></Param>
+              </Expression>
+              <ActionSet>
+                <Action DefId="A0">
+                  <Expression>
+                    <Param><![CDATA[10]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A1">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A2">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A3">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A4">
+                  <Expression>
+                    <Param><![CDATA["HOURS_POLICY_1.1_2025"]]></Param>
+                  </Expression>
+                </Action>
+              </ActionSet>
+            </Condition>
+          </Partition>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA["PRE_PREP"]]></Param>
+          </Expression>
+          <Partition DefId="C1">
+            <Condition>
+              <Expression>
+                <Param><![CDATA["2023-07-01"]]></Param>
+                <Param><![CDATA["2024-06-30"]]></Param>
+              </Expression>
+              <ActionSet>
+                <Action DefId="A0">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A1">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A2">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A3">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A4">
+                  <Expression>
+                    <Param><![CDATA["HOURS_POLICY_1.2_2023"]]></Param>
+                  </Expression>
+                </Action>
+              </ActionSet>
+            </Condition>
+            <Condition>
+              <Expression>
+                <Param><![CDATA["2024-07-01"]]></Param>
+                <Param><![CDATA["2025-06-30"]]></Param>
+              </Expression>
+              <ActionSet>
+                <Action DefId="A0">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A1">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A2">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A3">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A4">
+                  <Expression>
+                    <Param><![CDATA["HOURS_POLICY_1.2_2024"]]></Param>
+                  </Expression>
+                </Action>
+              </ActionSet>
+            </Condition>
+            <Condition>
+              <Expression>
+                <Param><![CDATA["2025-07-01"]]></Param>
+                <Param><![CDATA["2026-06-30"]]></Param>
+              </Expression>
+              <ActionSet>
+                <Action DefId="A0">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A1">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A2">
+                  <Expression>
+                    <Param><![CDATA[5]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A3">
+                  <Expression>
+                    <Param><![CDATA[15]]></Param>
+                  </Expression>
+                </Action>
+                <Action DefId="A4">
+                  <Expression>
+                    <Param><![CDATA["HOURS_POLICY_1.2_2025"]]></Param>
+                  </Expression>
+                </Action>
+              </ActionSet>
+            </Condition>
+          </Partition>
+        </Condition>
+      </Partition>
+    </Contents>
+  </Body>
+  <Resources DefaultLocale="en_US">
+    <ResourceSet Locale="en_US">
+      <Data Name="Definitions(A0)#HeaderText"><![CDATA[Standard Hours]]></Data>
+      <Data Name="Definitions(A0)#Width"><![CDATA[116]]></Data>
+      <Data Name="Definitions(A1)#HeaderText"><![CDATA[ESK Hours]]></Data>
+      <Data Name="Definitions(A1)#Width"><![CDATA[96]]></Data>
+      <Data Name="Definitions(A2)#HeaderText"><![CDATA[Inclusion Hours]]></Data>
+      <Data Name="Definitions(A2)#Width"><![CDATA[116]]></Data>
+      <Data Name="Definitions(A3)#HeaderText"><![CDATA[Maximum Hours]]></Data>
+      <Data Name="Definitions(A3)#Width"><![CDATA[120]]></Data>
+      <Data Name="Definitions(A4)#HeaderText"><![CDATA[Policy Reference]]></Data>
+      <Data Name="Definitions(A4)#Width"><![CDATA[148]]></Data>
+      <Data Name="Definitions(C0)#HeaderText"><![CDATA[Program Type]]></Data>
+      <Data Name="Definitions(C0)#Width"><![CDATA[212]]></Data>
+      <Data Name="Definitions(C1)#HeaderText"><![CDATA[Effective Date Range]]></Data>
+      <Data Name="Definitions(C1)#Width"><![CDATA[172]]></Data>
+    </ResourceSet>
+  </Resources>
+</DT>
+  </definition>
+</ilog.rules.studio.model.dt:DecisionTable>

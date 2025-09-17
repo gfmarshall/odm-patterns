@@ -1,0 +1,104 @@
+package funding.eligibility.validation;
+
+import funding.EligibilityRequest;
+import funding.EligibilityResponse;
+import funding.FundingDetermination;
+import funding.Child;
+import funding.Service;
+import funding.Guardian;
+import funding.Family;
+
+// IBM ODM Rule set for input validation
+ruleset Validation_Rules {
+    // Rule for verifying child information is present
+    rule "Validate Child Required" {
+        property "task" = "funding-eligibility-validation"
+        property "priority" = 1000
+        
+        when {
+            $request: EligibilityRequest($request.getChild() == null);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            $response.setProcessingStatus("ERROR");
+            $response.setErrorMessage("Missing required input: child information");
+            System.out.println("Validation error: Missing child information");
+        }
+    }
+    
+    // Rule for verifying service information is present
+    rule "Validate Service Required" {
+        property "task" = "funding-eligibility-validation"
+        property "priority" = 990
+        
+        when {
+            $request: EligibilityRequest($request.getService() == null);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            $response.setProcessingStatus("ERROR");
+            $response.setErrorMessage("Missing required input: service information");
+            System.out.println("Validation error: Missing service information");
+        }
+    }
+    
+    // Rule for verifying child date of birth is present
+    rule "Validate Child Date of Birth Required" {
+        property "task" = "funding-eligibility-validation"
+        property "priority" = 980
+        
+        when {
+            $request: EligibilityRequest($request.getChild() != null && $request.getChild().getDateOfBirth() == null);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            $response.setProcessingStatus("ERROR");
+            $response.setErrorMessage("Missing required input: child date of birth");
+            System.out.println("Validation error: Missing child date of birth");
+        }
+    }
+    
+    // Rule for validating funding year range
+    rule "Validate Funding Year Range" {
+        property "task" = "funding-eligibility-validation"
+        property "priority" = 970
+        
+        when {
+            $request: EligibilityRequest($request.getFundingYear() < 2020 || $request.getFundingYear() > 2040);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            $response.setProcessingStatus("ERROR");
+            $response.setErrorMessage("Invalid funding year: " + $request.getFundingYear() + ". Must be between 2020-2040");
+            System.out.println("Validation error: Invalid funding year: " + $request.getFundingYear());
+        }
+    }
+    
+    // Rule for validating program type if application is present
+    rule "Validate Program Type If Application Present" {
+        property "task" = "funding-eligibility-validation"
+        property "priority" = 960
+        
+        when {
+            $request: EligibilityRequest($request.getApplication() != null && $request.getApplication().getRequestedBaseProgramType() == null);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            $response.setProcessingStatus("ERROR");
+            $response.setErrorMessage("Application is present but missing required program type");
+            System.out.println("Validation error: Application missing program type");
+        }
+    }
+    
+    // Rule for validating service provider is present when service is specified
+    rule "Validate Service Provider" {
+        property "task" = "funding-eligibility-validation"
+        property "priority" = 950
+        
+        when {
+            $request: EligibilityRequest($request.getService() != null && 
+                                     $request.getService().getProviderId() != null && 
+                                     $request.getServiceProvider() == null);
+            $response: EligibilityResponse($response.getProcessingStatus().equals("IN_PROGRESS"));
+        } then {
+            $response.setProcessingStatus("ERROR");
+            $response.setErrorMessage("Service provider information is required when service is specified");
+            System.out.println("Validation error: Missing service provider information");
+        }
+    }
+}

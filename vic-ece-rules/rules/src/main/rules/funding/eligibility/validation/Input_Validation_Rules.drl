@@ -1,0 +1,97 @@
+package funding.eligibility.validation;
+
+import funding.EligibilityRequest;
+import funding.EligibilityResponse;
+import funding.FundingDetermination;
+import funding.Child;
+import funding.Service;
+import funding.Guardian;
+import funding.Family;
+
+// Ruleflow group for validation rules
+ruleflow-group "funding-eligibility-validation"
+
+rule "Validate Child Required"
+    no-loop true
+    salience 1000
+    when
+        $request : EligibilityRequest(child == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+    then
+        modify($response) {
+            setProcessingStatus("ERROR"),
+            setErrorMessage("Missing required input: child information")
+        }
+        System.out.println("Validation error: Missing child information");
+end
+
+rule "Validate Service Required"
+    no-loop true
+    salience 990
+    when
+        $request : EligibilityRequest(service == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+    then
+        modify($response) {
+            setProcessingStatus("ERROR"),
+            setErrorMessage("Missing required input: service information")
+        }
+        System.out.println("Validation error: Missing service information");
+end
+
+rule "Validate Child Date of Birth Required"
+    no-loop true
+    salience 980
+    when
+        $request : EligibilityRequest(child != null && child.getDateOfBirth() == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+    then
+        modify($response) {
+            setProcessingStatus("ERROR"),
+            setErrorMessage("Missing required input: child date of birth")
+        }
+        System.out.println("Validation error: Missing child date of birth");
+end
+
+rule "Validate Funding Year Range"
+    no-loop true
+    salience 970
+    when
+        $request : EligibilityRequest(fundingYear < 2020 || fundingYear > 2040)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+    then
+        modify($response) {
+            setProcessingStatus("ERROR"),
+            setErrorMessage("Invalid funding year: " + $request.getFundingYear() + ". Must be between 2020-2040")
+        }
+        System.out.println("Validation error: Invalid funding year: " + $request.getFundingYear());
+end
+
+rule "Validate Program Type If Application Present"
+    no-loop true
+    salience 960
+    when
+        $request : EligibilityRequest(application != null && application.getRequestedBaseProgramType() == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+    then
+        modify($response) {
+            setProcessingStatus("ERROR"),
+            setErrorMessage("Application is present but missing required program type")
+        }
+        System.out.println("Validation error: Application missing program type");
+end
+
+rule "Validate Service Provider"
+    no-loop true
+    salience 950
+    when
+        $request : EligibilityRequest(service != null && service.getProviderId() != null && 
+                                    serviceProvider == null)
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+    then
+        modify($response) {
+            setProcessingStatus("ERROR"),
+            setErrorMessage("Service provider information is required when service is specified")
+        }
+        System.out.println("Validation error: Missing service provider information");
+end

@@ -1,0 +1,120 @@
+package funding.eligibility.criteria;
+
+import funding.EligibilityRequest;
+import funding.EligibilityResponse;
+import funding.FundingDetermination;
+import funding.Child;
+import funding.Service;
+import funding.ServiceProvider;
+import funding.FundingDetermination.EligibilityStatus;
+import funding.FundingDetermination.EligibilityResult;
+import funding.Child.BaseProgramType;
+
+// Ruleflow group for service eligibility checks
+ruleflow-group "funding-eligibility-service-check"
+
+rule "Check Service Eligibility"
+    no-loop true
+    when
+        $request : EligibilityRequest(service != null)
+        $service : Service() from $request.getService()
+        $determination : FundingDetermination()
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Check if service can deliver funded kindergarten programs
+        eval($service.isEligibleToDeliverFundedKinder())
+    then
+        EligibilityResult result = new EligibilityResult("SERVICE_ELIGIBILITY", EligibilityStatus.ELIGIBLE);
+        result.addReason("Service is approved to deliver Victorian funded kindergarten programs");
+        result.addPolicyRef("SERVICE_APPROVAL_POLICY_1.1");
+        
+        modify($determination) {
+            addEligibilityResult(result)
+        }
+        
+        System.out.println("Service is eligible to deliver funded programs");
+end
+
+rule "Service Not Eligible"
+    no-loop true
+    when
+        $request : EligibilityRequest(service != null)
+        $service : Service() from $request.getService()
+        $determination : FundingDetermination()
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Check if service cannot deliver funded kindergarten programs
+        eval(!$service.isEligibleToDeliverFundedKinder())
+    then
+        EligibilityResult result = new EligibilityResult("SERVICE_ELIGIBILITY", EligibilityStatus.INELIGIBLE);
+        result.addReason("Service is not approved to deliver Victorian funded kindergarten programs");
+        result.addPolicyRef("SERVICE_APPROVAL_POLICY_1.1");
+        
+        // Make all programs ineligible due to service ineligibility
+        EligibilityResult result1 = new EligibilityResult("THREE_YEAR_OLD_KINDER", EligibilityStatus.INELIGIBLE);
+        result1.addReason("Service is not eligible to deliver funded programs");
+        
+        EligibilityResult result2 = new EligibilityResult("PRE_PREP", EligibilityStatus.INELIGIBLE);
+        result2.addReason("Service is not eligible to deliver funded programs");
+        
+        modify($determination) {
+            addEligibilityResult(result),
+            addEligibilityResult(result1),
+            addEligibilityResult(result2)
+        }
+        
+        System.out.println("Service is not eligible to deliver funded programs");
+end
+
+rule "Check Service Provider Eligibility"
+    no-loop true
+    when
+        $request : EligibilityRequest(serviceProvider != null)
+        $provider : ServiceProvider() from $request.getServiceProvider()
+        $determination : FundingDetermination()
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Check if provider is eligible
+        eval($provider.isEligibleToDeliverFundedPrograms())
+    then
+        EligibilityResult result = new EligibilityResult("PROVIDER_ELIGIBILITY", EligibilityStatus.ELIGIBLE);
+        result.addReason("Provider is approved and compliant");
+        result.addPolicyRef("PROVIDER_APPROVAL_POLICY_2.3");
+        
+        modify($determination) {
+            addEligibilityResult(result)
+        }
+        
+        System.out.println("Service provider is eligible");
+end
+
+rule "Service Provider Not Eligible"
+    no-loop true
+    when
+        $request : EligibilityRequest(serviceProvider != null)
+        $provider : ServiceProvider() from $request.getServiceProvider()
+        $determination : FundingDetermination()
+        $response : EligibilityResponse(processingStatus == "IN_PROGRESS")
+        
+        // Check if provider is not eligible
+        eval(!$provider.isEligibleToDeliverFundedPrograms())
+    then
+        EligibilityResult result = new EligibilityResult("PROVIDER_ELIGIBILITY", EligibilityStatus.INELIGIBLE);
+        result.addReason("Provider is not approved or is non-compliant");
+        result.addPolicyRef("PROVIDER_APPROVAL_POLICY_2.3");
+        
+        // Make all programs ineligible due to provider ineligibility
+        EligibilityResult result1 = new EligibilityResult("THREE_YEAR_OLD_KINDER", EligibilityStatus.INELIGIBLE);
+        result1.addReason("Service provider is not eligible to deliver funded programs");
+        
+        EligibilityResult result2 = new EligibilityResult("PRE_PREP", EligibilityStatus.INELIGIBLE);
+        result2.addReason("Service provider is not eligible to deliver funded programs");
+        
+        modify($determination) {
+            addEligibilityResult(result),
+            addEligibilityResult(result1),
+            addEligibilityResult(result2)
+        }
+        
+        System.out.println("Service provider is not eligible");
+end

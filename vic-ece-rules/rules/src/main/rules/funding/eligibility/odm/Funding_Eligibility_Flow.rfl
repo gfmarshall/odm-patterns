@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.ruleflow:RuleFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.ruleflow="http://ilog.rules.studio/model/ruleflow.ecore" name="Funding_Eligibility_Flow">
+  <uuid>bd703c2c-f1e4-4a4c-ac46-b125963f3990</uuid>
+  <description>Eligibility determination workflow for Victorian ECE funding programs</description>
+  <locale>en_US</locale>
+  <rfModel>
+    <ruleTask name="Initialize Response">
+      <condition language="bal"><![CDATA[true]]></condition>
+      <action language="bal"><![CDATA[
+// Initialize Funding Determination 
+FundingDetermination determination = new FundingDetermination();
+        
+// Set effective dates (usually financial year)
+java.time.LocalDate startDate = java.time.LocalDate.of(request.getFundingYear(), 7, 1);
+java.time.LocalDate endDate = java.time.LocalDate.of(request.getFundingYear() + 1, 6, 30);
+determination.setEffectiveFrom(startDate);
+determination.setEffectiveTo(endDate);
+        
+// Initialize response object
+EligibilityResponse response = new EligibilityResponse(determination);
+response.setProcessingStatus("IN_PROGRESS");
+response.setRequestId(java.util.UUID.randomUUID().toString());
+response.setTimestamp(java.time.LocalDateTime.now().toString());
+]]></action>
+      <transition name="Transition to Validation"/>
+    </ruleTask>
+    <ruleTask name="Validate Input">
+      <action language="bal"><![CDATA[// Invoke input validation rules]]></action>
+      <transition name="Transition to Validation Check">
+        <condition language="bal"><![CDATA[true]]></condition>
+      </transition>
+    </ruleTask>
+    <branchTask name="Validation Check">
+      <transition name="Transition to Age Check">
+        <condition language="bal"><![CDATA[response.getProcessingStatus() == "IN_PROGRESS"]]></condition>
+      </transition>
+      <transition name="Transition to Validation Error">
+        <condition language="bal"><![CDATA[response.getProcessingStatus() == "ERROR"]]></condition>
+      </transition>
+    </branchTask>
+    <ruleTask name="Age Eligibility">
+      <transition name="Transition to Service Check"/>
+    </ruleTask>
+    <ruleTask name="Service Eligibility">
+      <transition name="Transition to Program Rules"/>
+    </ruleTask>
+    <ruleTask name="Program Rules">
+      <transition name="Transition to Supplements"/>
+    </ruleTask>
+    <ruleTask name="Supplement Eligibility">
+      <transition name="Transition to Final Output"/>
+    </ruleTask>
+    <ruleTask name="Finalize Response">
+      <action language="bal"><![CDATA[
+// Set final status
+response.setProcessingStatus("SUCCESS");
+      
+// Set primary program 
+if (determination.getBaseProgramType() != null) {
+    response.setPrimaryProgram(determination.getBaseProgramType().toString());
+}
+]]></action>
+      <transition name="Transition to End"/>
+    </ruleTask>
+    <stopTask name="End Flow"/>
+    <stopTask name="Validation Error">
+      <metaInfo>
+        <entry key="taskType" value="stop"/>
+      </metaInfo>
+    </stopTask>
+  </rfModel>
+  <mainRuleTask>Initialize Response</mainRuleTask>
+</ilog.rules.studio.model.ruleflow:RuleFlow>
