@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <n>Three Year Old Kindergarten Age Eligibility</n>
+  <uuid>5e2a9c54-ca36-4b71-8de4-a9b72fc89e14</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+    the child from 'the eligibility request' has date of birth
+    and the reference date of 'the eligibility request' is known
+    and the child's age at the reference date of 'the eligibility request' is at least 3
+    and the child's age at the reference date of 'the eligibility request' is less than 5
+    and the processing status of 'the eligibility response' is "IN_PROGRESS"
+then
+    create a new eligibility result with program type "THREE_YEAR_OLD_KINDER" and status ELIGIBLE ;
+    add reason "Child will be between 3 and 4 years old on April 30 of the program year" to 'the eligibility result' ;
+    add policy reference "AGE_ELIGIBILITY_POLICY_1.2" to 'the eligibility result' ;
+    set the base program type of 'the funding determination' to THREE_YEAR_OLD_KINDER ;
+    add 'the eligibility result' to 'the funding determination' ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

@@ -1,0 +1,374 @@
+{
+  "info": {
+    "_postman_id": "e7a89f5d-8b52-4df5-af1e-9cf542c1b687",
+    "name": "ECE Eligibility Tests",
+    "description": "Test collection for the Victorian ECE Eligibility Rule Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Age Eligibility Tests",
+      "item": [
+        {
+          "name": "Child Under 3 - Should be Ineligible",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 2000ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "const responseJson = pm.response.json();",
+                  "",
+                  "pm.test(\"BaseProgramType should be undefined due to ineligibility\", function () {",
+                  "    pm.expect(responseJson.baseProgramType).to.be.undefined;",
+                  "});",
+                  "",
+                  "pm.test(\"Should have ineligibility result for THREE_YEAR_OLD_KINDER\", function () {",
+                  "    const eligibilityResults = responseJson.eligibilityResults || [];",
+                  "    const threeYOResult = eligibilityResults.find(r => r.scheme === 'THREE_YEAR_OLD_KINDER');",
+                  "    pm.expect(threeYOResult).to.exist;",
+                  "    pm.expect(threeYOResult.status).to.equal('INELIGIBLE');",
+                  "});",
+                  "",
+                  "pm.test(\"Should have ineligibility result for PRE_PREP\", function () {",
+                  "    const eligibilityResults = responseJson.eligibilityResults || [];",
+                  "    const prePrepResult = eligibilityResults.find(r => r.scheme === 'PRE_PREP');",
+                  "    pm.expect(prePrepResult).to.exist;",
+                  "    pm.expect(prePrepResult.status).to.equal('INELIGIBLE');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "test-data/eligibility/age_tests/child_under_3.json"
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{eligibilityRulesetPath}}",
+              "host": ["{{baseUrl}}{{eligibilityRulesetPath}}"]
+            },
+            "description": "Tests eligibility for a child under 3 years old"
+          },
+          "response": []
+        },
+        {
+          "name": "Child 3 to 4 - Should be Eligible for 3YO Kinder",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const responseJson = pm.response.json();",
+                  "",
+                  "pm.test(\"BaseProgramType should be THREE_YEAR_OLD_KINDER\", function () {",
+                  "    pm.expect(responseJson.baseProgramType).to.equal('THREE_YEAR_OLD_KINDER');",
+                  "});",
+                  "",
+                  "pm.test(\"Should have eligibility result for THREE_YEAR_OLD_KINDER\", function () {",
+                  "    const eligibilityResults = responseJson.eligibilityResults || [];",
+                  "    const threeYOResult = eligibilityResults.find(r => r.scheme === 'THREE_YEAR_OLD_KINDER');",
+                  "    pm.expect(threeYOResult).to.exist;",
+                  "    pm.expect(threeYOResult.status).to.equal('ELIGIBLE');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "test-data/eligibility/age_tests/child_3_to_4.json"
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{eligibilityRulesetPath}}",
+              "host": ["{{baseUrl}}{{eligibilityRulesetPath}}"]
+            },
+            "description": "Tests eligibility for a child between 3 and 4 years old"
+          },
+          "response": []
+        },
+        {
+          "name": "Child 4 to 5 - Should be Eligible for Pre-Prep",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const responseJson = pm.response.json();",
+                  "",
+                  "pm.test(\"BaseProgramType should be PRE_PREP\", function () {",
+                  "    pm.expect(responseJson.baseProgramType).to.equal('PRE_PREP');",
+                  "});",
+                  "",
+                  "pm.test(\"Should have eligibility result for PRE_PREP\", function () {",
+                  "    const eligibilityResults = responseJson.eligibilityResults || [];",
+                  "    const prePrepResult = eligibilityResults.find(r => r.scheme === 'PRE_PREP');",
+                  "    pm.expect(prePrepResult).to.exist;",
+                  "    pm.expect(prePrepResult.status).to.equal('ELIGIBLE');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "test-data/eligibility/age_tests/child_4_to_5.json"
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{eligibilityRulesetPath}}",
+              "host": ["{{baseUrl}}{{eligibilityRulesetPath}}"]
+            },
+            "description": "Tests eligibility for a child between 4 and 5 years old"
+          },
+          "response": []
+        },
+        {
+          "name": "Child Over 6 - Should be Ineligible",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "const responseJson = pm.response.json();",
+                  "",
+                  "pm.test(\"BaseProgramType should be undefined due to ineligibility\", function () {",
+                  "    pm.expect(responseJson.baseProgramType).to.be.undefined;",
+                  "});",
+                  "",
+                  "pm.test(\"Should have ineligibility results for all programs\", function () {",
+                  "    const eligibilityResults = responseJson.eligibilityResults || [];",
+                  "    ",
+                  "    const threeYOResult = eligibilityResults.find(r => r.scheme === 'THREE_YEAR_OLD_KINDER');",
+                  "    pm.expect(threeYOResult).to.exist;",
+                  "    pm.expect(threeYOResult.status).to.equal('INELIGIBLE');",
+                  "    ",
+                  "    const prePrepResult = eligibilityResults.find(r => r.scheme === 'PRE_PREP');",
+                  "    pm.expect(prePrepResult).to.exist;",
+                  "    pm.expect(prePrepResult.status).to.equal('INELIGIBLE');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "file",
+              "file": {
+                "src": "test-data/eligibility/age_tests/child_over_6.json"
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{eligibilityRulesetPath}}",
+              "host": ["{{baseUrl}}{{eligibilityRulesetPath}}"]
+            },
+            "description": "Tests eligibility for a child over 6 years old"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests for age eligibility criteria"
+    },
+    {
+      "name": "Reference Date Tests",
+      "item": [
+        {
+          "name": "Use Reference Date For Age Calculation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response should use reference date for calculations\", function () {",
+                  "    const request = JSON.parse(pm.request.body.raw);",
+                  "    const responseJson = pm.response.json();",
+                  "    ",
+                  "    // The child's birthday is 2023-05-15 and reference date is 2026-04-30",
+                  "    // This should put them just under 3yo, making them ineligible",
+                  "    const eligibilityResults = responseJson.eligibilityResults || [];",
+                  "    const threeYOResult = eligibilityResults.find(r => r.scheme === 'THREE_YEAR_OLD_KINDER');",
+                  "    ",
+                  "    pm.expect(threeYOResult).to.exist;",
+                  "    pm.expect(threeYOResult.status).to.equal('INELIGIBLE');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Load the test data file",
+                  "const fs = require('fs');",
+                  "const testData = JSON.parse(fs.readFileSync('test-data/eligibility/age_tests/child_under_3.json'));",
+                  "",
+                  "// Modify it to use a different reference date",
+                  "testData.referenceDate = \"2026-05-30\";",
+                  "",
+                  "// Set the modified data as the request body",
+                  "pm.request.body.raw = JSON.stringify(testData);",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{eligibilityRulesetPath}}",
+              "host": ["{{baseUrl}}{{eligibilityRulesetPath}}"]
+            },
+            "description": "Tests that age calculations are based on reference date rather than system time"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests for reference date handling"
+    },
+    {
+      "name": "Validation Tests",
+      "item": [
+        {
+          "name": "Missing Child Information",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Response should indicate validation error\", function () {",
+                  "    const responseJson = pm.response.json();",
+                  "    pm.expect(responseJson.processingStatus).to.equal(\"ERROR\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Load the test data file",
+                  "const fs = require('fs');",
+                  "const testData = JSON.parse(fs.readFileSync('test-data/eligibility/age_tests/child_under_3.json'));",
+                  "",
+                  "// Remove child information",
+                  "delete testData.child;",
+                  "",
+                  "// Set the modified data as the request body",
+                  "pm.request.body.raw = JSON.stringify(testData);",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{eligibilityRulesetPath}}",
+              "host": ["{{baseUrl}}{{eligibilityRulesetPath}}"]
+            },
+            "description": "Tests validation for missing child information"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tests for input validation rules"
+    }
+  ]
+}

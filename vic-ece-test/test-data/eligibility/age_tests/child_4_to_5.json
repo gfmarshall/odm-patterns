@@ -1,0 +1,52 @@
+{
+  "fundingYear": 2026,
+  "programYear": 2026,
+  "referenceDate": "2026-04-30",
+  "child": {
+    "personId": "C-125",
+    "firstName": "Michael",
+    "lastName": "Brown",
+    "dateOfBirth": "2021-06-15",
+    "indigenousStatus": "NONE",
+    "immigrationStatusCodes": [],
+    "outOfHomeCareStatus": false,
+    "disabilityOrAddNeeds": false,
+    "veylfDelays": [],
+    "fundedKinderYearsCompleted": {
+      "THREE_YEAR_OLD_KINDER": 1,
+      "PRE_PREP": 0
+    }
+  },
+  "family": {
+    "householdId": "H-79",
+    "address": "3 Example St, Suburb VIC",
+    "lgaCode": "LGA_301",
+    "seifaQuintile": 3
+  },
+  "guardians": [
+    {
+      "guardianId": "G-3",
+      "relationshipToChild": "PARENT",
+      "concessions": []
+    }
+  ],
+  "serviceProvider": {
+    "providerId": "P-9",
+    "isNQFApprovedProvider": true,
+    "isVicKinderFundingApprovedProvider": true
+  },
+  "service": {
+    "serviceId": "S-9",
+    "providerId": "P-9",
+    "deliverySetting": "LONG_DAY_CARE_INTEGRATED",
+    "lgaCode": "LGA_301",
+    "deliversVicGovFundedKindergartenProgramInYear": true
+  },
+  "application": {
+    "applicationId": "A-90",
+    "requestedBaseProgramType": "PRE_PREP",
+    "requestedWeeklyHours": 15,
+    "allocationPriorityCodes": []
+  },
+  "supportingEvidenceRefs": []
+}

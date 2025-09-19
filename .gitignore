@@ -1,8 +1,11 @@
 # ODM Data directories (persistent storage)
 odm-data/
 odm-config/
-miniloan/
+MINILOAN/
 odm-on-cloud-getting-started/
+
+*.jar
+*.class
 
 # Logs
 *.log

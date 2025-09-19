@@ -8,15 +8,22 @@
   <tasks name="initialization" type="RuleTask">
     <description>Initialize Response Object</description>
     <task>initialization</task>
+    <ExecutionMode>Fastpath</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.flows.Flow_Control_Rules</ruleset>
-    </taskDefinition>
+      <RuleList>
+        <Package Name="funding.eligibility.flows"/>
+      </RuleList>
   </tasks>
   <tasks name="Input Validation" type="RuleTask">
     <description>Validate All Request Inputs</description>
     <task>funding-eligibility-validation</task>
+    <ExecutionMode>Fastpath</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.validation.Validation_Rules</ruleset>
+      <RuleList>
+        <Package Name="funding.eligibility.validation"/>
+      </RuleList>
     </taskDefinition>
   </tasks>
   <tasks name="Validation Check" type="DecisionTask">
@@ -25,36 +32,56 @@
   <tasks name="Age Eligibility" type="RuleTask">
     <description>Check Age-Based Eligibility</description>
     <task>funding-eligibility-age-check</task>
+    <ExecutionMode>RetePlus</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.criteria.Age_Eligibility_Rules</ruleset>
+      <RuleList>
+        <Package Name="funding.eligibility.criteria.age"/>
+      </RuleList>
     </taskDefinition>
   </tasks>
   <tasks name="Service Eligibility" type="RuleTask">
     <description>Check Service Provider Eligibility</description>
     <task>funding-eligibility-service-check</task>
+    <ExecutionMode>RetePlus</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.criteria.Service_Eligibility_Rules</ruleset>
+      <RuleList>
+        <Package Name="funding.eligibility.criteria.service"/>
+      </RuleList>
     </taskDefinition>
   </tasks>
   <tasks name="Program Rules" type="RuleTask">
     <description>Apply Program-Specific Rules</description>
     <task>funding-eligibility-program-specific</task>
+    <ExecutionMode>RetePlus</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.criteria.Program_Specific_Rules</ruleset>
+      <RuleList>
+        <Package Name="funding.eligibility.criteria.program"/>
+      </RuleList>
     </taskDefinition>
   </tasks>
   <tasks name="Supplement Eligibility" type="RuleTask">
     <description>Check Supplement Eligibility</description>
     <task>funding-eligibility-supplement-check</task>
+    <ExecutionMode>RetePlus</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.criteria.Supplement_Eligibility_Rules</ruleset>
+      <RuleList>
+        <Package Name="funding.eligibility.criteria.supplements"/>
+      </RuleList>
     </taskDefinition>
   </tasks>
   <tasks name="Output Preparation" type="RuleTask">
     <description>Finalize Output Response</description>
     <task>funding-eligibility-output</task>
+    <ExecutionMode>Fastpath</ExecutionMode>
+    <ExitCriteria>None</ExitCriteria>
     <taskDefinition>
-      <ruleset>funding.eligibility.flows.Flow_Control_Rules</ruleset>
+      <RuleList>
+        <Package Name="funding.eligibility.flows"/>
+      </RuleList>
     </taskDefinition>
   </tasks>
   <startNode>1</startNode>

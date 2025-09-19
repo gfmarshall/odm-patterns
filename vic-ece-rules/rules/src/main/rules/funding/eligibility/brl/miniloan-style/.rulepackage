@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>miniloan-style</name>
+  <uuid>a4b0f9d6-31cc-4631-9cf5-88f2b07fc291</uuid>
+</ilog.rules.studio.model.base:RulePackage>

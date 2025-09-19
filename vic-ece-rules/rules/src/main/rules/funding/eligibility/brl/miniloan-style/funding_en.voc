@@ -1,0 +1,49 @@
+# Vocabulary Properties
+uuid = fe8c7d34-9a21-4fd2-b8d3-a5de3c89e415
+
+# funding.Child
+funding.Child#concept.label = child
+funding.Child.dateOfBirth#phrase.navigation = {date of birth} of {this}
+funding.Child.getAgeAt(java.time.LocalDate)#phrase.navigation = {this}'s age on {0}
+funding.Child.hasRefugeeOrAsylumStatus()#phrase.navigation = {this} has refugee or asylum status
+funding.Child.hasMinimumVeylfDelaysForAdditionalYear()#phrase.navigation = {this} has minimum VEYLF delays for additional year
+
+# funding.EligibilityRequest
+funding.EligibilityRequest#concept.label = eligibility request
+funding.EligibilityRequest.getChild()#phrase.navigation = {child} from {this}
+funding.EligibilityRequest.programYear#phrase.navigation = {program year} of {this}
+funding.EligibilityRequest.getProgramYear()#phrase.navigation = {program year} of {this}
+funding.EligibilityRequest.referenceDate#phrase.navigation = {reference date} of {this}
+funding.EligibilityRequest.getReferenceDate()#phrase.navigation = {reference date} of {this}
+
+# funding.EligibilityResponse
+funding.EligibilityResponse#concept.label = eligibility response
+funding.EligibilityResponse.processingStatus#phrase.navigation = {processing status} of {this}
+funding.EligibilityResponse.getProcessingStatus()#phrase.navigation = {processing status} of {this}
+
+# funding.CalculationRequest
+funding.CalculationRequest#concept.label = calculation request
+funding.CalculationRequest.referenceDate#phrase.navigation = {reference date} of {this}
+funding.CalculationRequest.getReferenceDate()#phrase.navigation = {reference date} of {this}
+
+# funding.FundingDetermination
+funding.FundingDetermination#concept.label = funding determination
+funding.FundingDetermination.baseProgramType#phrase.navigation = {base program type} of {this}
+funding.FundingDetermination.setBaseProgramType(funding.Child.BaseProgramType)#phrase.action = set the base program type of {this} to {0}
+funding.FundingDetermination.addEligibilityResult(funding.FundingDetermination.EligibilityResult)#phrase.action = add {0} to {this}
+
+# funding.FundingDetermination.EligibilityResult
+funding.FundingDetermination.EligibilityResult#concept.label = eligibility result
+funding.FundingDetermination.EligibilityResult.new(java.lang.String,funding.FundingDetermination.EligibilityStatus)#phrase.action = create a new eligibility result with program type {0} and status {1}
+funding.FundingDetermination.EligibilityResult.addReason(java.lang.String)#phrase.action = add reason {0} to {this}
+funding.FundingDetermination.EligibilityResult.addPolicyRef(java.lang.String)#phrase.action = add policy reference {0} to {this}
+
+# funding.Service
+funding.Service#concept.label = service
+funding.Service.isEligibleToDeliverFundedKinder()#phrase.navigation = {this} is eligible to deliver funded kindergarten
+
+# Enumerations
+funding.Child.BaseProgramType.THREE_YEAR_OLD_KINDER#phrase.navigation = THREE_YEAR_OLD_KINDER
+funding.Child.BaseProgramType.PRE_PREP#phrase.navigation = PRE_PREP
+funding.FundingDetermination.EligibilityStatus.ELIGIBLE#phrase.navigation = ELIGIBLE
+funding.FundingDetermination.EligibilityStatus.INELIGIBLE#phrase.navigation = INELIGIBLE
