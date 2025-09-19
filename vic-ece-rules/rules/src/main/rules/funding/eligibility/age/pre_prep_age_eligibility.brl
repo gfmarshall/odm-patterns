@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <n>Pre-Prep Age Eligibility</n>
+  <uuid>6f3b7e29-f4a9-4c52-9e84-a12c5d3a8f2d</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+    the child from 'the eligibility request' has date of birth
+    and the reference date of 'the eligibility request' is known
+    and the child's age at the reference date of 'the eligibility request' is at least 4
+    and the child's age at the reference date of 'the eligibility request' is less than 6
+    and the processing status of 'the eligibility response' is "IN_PROGRESS"
+    and (the base program type of 'the funding determination' is PRE_PREP
+         or the base program type of 'the funding determination' is null)
+then
+    create a new eligibility result with program type "PRE_PREP" and status ELIGIBLE ;
+    add reason "Child will be between 4 and 5 years old on April 30 of the program year" to 'the eligibility result' ;
+    add policy reference "AGE_ELIGIBILITY_POLICY_2.1" to 'the eligibility result' ;
+    set the base program type of 'the funding determination' to PRE_PREP ;
+    add 'the eligibility result' to 'the funding determination' ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

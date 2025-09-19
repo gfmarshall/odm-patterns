@@ -6,13 +6,7 @@ This document summarizes the annotations added to the XOM classes for use with I
 
 Every class has been updated with the following annotations:
 
-1. **Class Level**:
-   - `@XmlAccessorType(XmlAccessType.FIELD)` - JAXB annotation for XML binding
-
-2. **Fields**:
-   - `@XmlElement` - JAXB annotation for each field to be serialized
-
-3. **Main Constructors**:
+1. **Main Constructors**:
    - `@CustomProperty(name = "dataio.default", value = "true")` - ODM annotation to mark the constructor as default for DVS
    - `@BusinessName` - ODM annotation for each parameter to provide business-friendly names
 
@@ -40,16 +34,12 @@ The following classes have been fully annotated:
 All classes follow this pattern:
 
 ```java
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Example implements Serializable {
     
-    @XmlElement
     private String field1;
-    
-    @XmlElement
     private int field2;
     
-    // Default constructor required for JAXB
+    // Default constructor
     public Example() {
     }
     
@@ -70,10 +60,12 @@ public class Example implements Serializable {
 
 1. These annotations will work in IBM ODM Rule Designer, which includes the necessary libraries.
 
-2. The annotations serve two main purposes:
-   - JAXB annotations enable XML binding for web services
-   - ODM annotations improve business rule authoring experience
+2. The annotations serve the purpose of improving business rule authoring experience.
 
 3. The `Serializable` interface has been maintained for compatibility with IBM ODM 9.x.
 
 4. When updating in Rule Designer, all compilation errors related to missing annotations will be resolved since the environment includes the necessary libraries.
+
+5. JaxB annotations have been removed from all classes.
+
+6. The `AnnotatedCalculationRequest` class in the `funding.example` package is an example class for demonstration purposes only and is not used in production. The main `CalculationRequest` class in the `funding` package is the one used in the actual application.

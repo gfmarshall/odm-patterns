@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <n>ESK Eligibility for Refugee or Asylum Seeker Status</n>
+  <uuid>e4ahdi8e-fbf9-4f59-9f8b-h19faf9faf9k</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+    the child from 'the eligibility request' has refugee or asylum status
+    and the child's age at the reference date of 'the eligibility request' is at least 3
+    and the child's age at the reference date of 'the eligibility request' is less than 5
+    and the processing status of 'the eligibility response' is "IN_PROGRESS"
+then
+    create a new eligibility result with program type "ESK" and status ELIGIBLE ;
+    add reason "Child has refugee or asylum seeker status" to 'the eligibility result' ;
+    add policy reference "ESK_POLICY_1.3" to 'the eligibility result' ;
+    add 'the eligibility result' to 'the funding determination' ;
+    add supplement code "ESK" to 'the funding determination' ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

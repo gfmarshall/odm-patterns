@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <n>Service Eligibility</n>
+  <uuid>9f5d8e39-f6a9-4e54-9f86-c14e7f5b9f4f</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+    the service from 'the eligibility request' is eligible to deliver funded kindergarten
+    and the processing status of 'the eligibility response' is "IN_PROGRESS"
+then
+    create a new eligibility result with program type "SERVICE_ELIGIBILITY" and status ELIGIBLE ;
+    add reason "Service is approved to deliver Victorian funded kindergarten programs" to 'the eligibility result' ;
+    add policy reference "SERVICE_APPROVAL_POLICY_1.1" to 'the eligibility result' ;
+    add 'the eligibility result' to 'the funding determination' ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

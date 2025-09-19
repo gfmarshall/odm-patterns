@@ -1,0 +1,144 @@
+# Vocabulary Properties
+uuid = fe8c7d34-9a21-4fd2-b8d3-a5de3c89e415
+
+# funding.Child
+funding.Child#concept.label = child
+funding.Child.dateOfBirth#phrase.navigation = {date of birth} of {this}
+funding.Child.getAgeAt(java.time.LocalDate)#phrase.navigation = {this}'s age on {0}
+funding.Child.getAgeAt(java.time.LocalDate)#phrase.navigation[alternate] = the child's age at {0}
+funding.Child.hasRefugeeOrAsylumStatus()#phrase.navigation = {this} has refugee or asylum status
+funding.Child.hasMinimumVeylfDelaysForAdditionalYear()#phrase.navigation = {this} has minimum VEYLF delays for additional year
+funding.Child.indigenousStatus#phrase.navigation = {indigenous status} of {this}
+funding.Child.outOfHomeCareStatus#phrase.navigation = {out of home care status} of {this}
+funding.Child.disabilityOrAddNeeds#phrase.navigation = {disability or additional needs} of {this}
+funding.Child.yearLevelIntent#phrase.navigation = {year level intent} of {this}
+funding.Child.getVeylfDelaysCount()#phrase.navigation = {VEYLF delays count} of {this}
+funding.Child.hasCompletedAdditionalYearFor(funding.Child.BaseProgramType)#phrase.navigation = {this} has completed additional year for {0}
+
+# funding.Person
+funding.Person#concept.label = person
+funding.Person.firstName#phrase.navigation = {first name} of {this}
+funding.Person.lastName#phrase.navigation = {last name} of {this}
+funding.Person.gender#phrase.navigation = {gender} of {this}
+funding.Person.indigenousStatus#phrase.navigation = {indigenous status} of {this}
+funding.Person.outOfHomeCareStatus#phrase.navigation = {out of home care status} of {this}
+funding.Person.disabilityOrAddNeeds#phrase.navigation = {disability or additional needs} of {this}
+funding.Person.hasIndigenousStatus()#phrase.navigation = {this} has indigenous status
+
+# funding.Guardian
+funding.Guardian#concept.label = guardian
+funding.Guardian.relationshipToChild#phrase.navigation = {relationship to child} of {this}
+funding.Guardian.hasConcession(java.lang.String)#phrase.navigation = {this} has concession {0}
+
+# funding.Family
+funding.Family#concept.label = family
+funding.Family.lgaCode#phrase.navigation = {LGA code} of {this}
+funding.Family.seifaQuintile#phrase.navigation = {SEIFA quintile} of {this}
+funding.Family.primaryLanguage#phrase.navigation = {primary language} of {this}
+funding.Family.interpreterRequired#phrase.navigation = {interpreter required} of {this}
+
+# funding.ServiceProvider
+funding.ServiceProvider#concept.label = service provider
+funding.ServiceProvider.isNQFApprovedProvider#phrase.navigation = {this} is NQF approved provider
+funding.ServiceProvider.isVicKinderFundingApprovedProvider#phrase.navigation = {this} is Victorian kindergarten funding approved provider
+
+# funding.Service
+funding.Service#concept.label = service
+funding.Service.lgaCode#phrase.navigation = {LGA code} of {this}
+funding.Service.deliverySetting#phrase.navigation = {delivery setting} of {this}
+funding.Service.deliversVicGovFundedKindergartenProgramInYear#phrase.navigation = {delivers Victorian Government funded kindergarten program in year} of {this}
+funding.Service.isEligibleToDeliverFundedKinder()#phrase.navigation = {this} is eligible to deliver funded kindergarten
+
+# funding.EligibilityRequest
+funding.EligibilityRequest#concept.label = eligibility request
+funding.EligibilityRequest.child#phrase.navigation = {child} from {this}
+funding.EligibilityRequest.getChild()#phrase.navigation = {child} from {this}
+funding.EligibilityRequest.programYear#phrase.navigation = {program year} of {this}
+funding.EligibilityRequest.getProgramYear()#phrase.navigation = {program year} of {this}
+funding.EligibilityRequest.fundingYear#phrase.navigation = {funding year} of {this}
+funding.EligibilityRequest.getFundingYear()#phrase.navigation = {funding year} of {this}
+funding.EligibilityRequest.referenceDate#phrase.navigation = {reference date} of {this}
+funding.EligibilityRequest.getReferenceDate()#phrase.navigation = {reference date} of {this}
+funding.EligibilityRequest.getFamily()#phrase.navigation = {family} from {this}
+funding.EligibilityRequest.getService()#phrase.navigation = {service} from {this}
+funding.EligibilityRequest.getServiceProvider()#phrase.navigation = {service provider} from {this}
+funding.EligibilityRequest.getApplication()#phrase.navigation = {application} from {this}
+funding.EligibilityRequest.hasGuardianWithConcession(java.lang.String)#phrase.navigation = {this} has guardian with concession {0}
+
+# funding.EligibilityRequest.EnrolmentApplication
+funding.EligibilityRequest.EnrolmentApplication#concept.label = enrolment application
+funding.EligibilityRequest.EnrolmentApplication.requestedBaseProgramType#phrase.navigation = {requested base program type} of {this}
+funding.EligibilityRequest.EnrolmentApplication.requestedWeeklyHours#phrase.navigation = {requested weekly hours} of {this}
+funding.EligibilityRequest.EnrolmentApplication.allocationPriorityCodes#phrase.navigation = {allocation priority codes} of {this}
+
+# funding.EligibilityResponse
+funding.EligibilityResponse#concept.label = eligibility response
+funding.EligibilityResponse.processingStatus#phrase.navigation = {processing status} of {this}
+funding.EligibilityResponse.getProcessingStatus()#phrase.navigation = {processing status} of {this}
+funding.EligibilityResponse.setProcessingStatus(java.lang.String)#phrase.action = set the processing status of {this} to {0}
+funding.EligibilityResponse.fundingDetermination#phrase.navigation = {funding determination} of {this}
+funding.EligibilityResponse.getFundingDetermination()#phrase.navigation = {funding determination} of {this}
+
+# funding.CalculationRequest
+funding.CalculationRequest#concept.label = calculation request
+funding.CalculationRequest.fundingYear#phrase.navigation = {funding year} of {this}
+funding.CalculationRequest.referenceDate#phrase.navigation = {reference date} of {this}
+funding.CalculationRequest.getReferenceDate()#phrase.navigation = {reference date} of {this}
+funding.CalculationRequest.eligibilityDetermination#phrase.navigation = {eligibility determination} of {this}
+funding.CalculationRequest.getEligibilityDetermination()#phrase.navigation = {eligibility determination} of {this}
+funding.CalculationRequest.getChild()#phrase.navigation = {child} from {this}
+funding.CalculationRequest.getService()#phrase.navigation = {service} from {this}
+funding.CalculationRequest.hasRateOverride(java.lang.String)#phrase.navigation = {this} has rate override for {0}
+funding.CalculationRequest.getApplicableRate(java.lang.String,double)#phrase.navigation = applicable rate for {0} with default {1} in {this}
+
+# funding.CalculationResponse
+funding.CalculationResponse#concept.label = calculation response
+funding.CalculationResponse.fundingDetermination#phrase.navigation = {funding determination} of {this}
+funding.CalculationResponse.processingStatus#phrase.navigation = {processing status} of {this}
+
+# funding.FundingDetermination
+funding.FundingDetermination#concept.label = funding determination
+funding.FundingDetermination.baseProgramType#phrase.navigation = {base program type} of {this}
+funding.FundingDetermination.setBaseProgramType(funding.Child.BaseProgramType)#phrase.action = set the base program type of {this} to {0}
+funding.FundingDetermination.addEligibilityResult(funding.FundingDetermination.EligibilityResult)#phrase.action = add {0} to {this}
+funding.FundingDetermination.addPolicyRef(java.lang.String)#phrase.action = add policy reference {0} to {this}
+funding.FundingDetermination.addSupplementCode(java.lang.String)#phrase.action = add supplement code {0} to {this}
+funding.FundingDetermination.hasSupplementCode(java.lang.String)#phrase.navigation = {this} has supplement code {0}
+funding.FundingDetermination.hoursPerWeekApproved#phrase.navigation = {hours per week approved} of {this}
+funding.FundingDetermination.setHoursPerWeekApproved(int)#phrase.action = set the hours per week approved of {this} to {0}
+funding.FundingDetermination.weeksPerYear#phrase.navigation = {weeks per year} of {this}
+funding.FundingDetermination.setWeeksPerYear(int)#phrase.action = set the weeks per year of {this} to {0}
+funding.FundingDetermination.isEligibleForScheme(java.lang.String)#phrase.navigation = {this} is eligible for scheme {0}
+funding.FundingDetermination.getEligibilityStatusForScheme(java.lang.String)#phrase.navigation = eligibility status for scheme {0} in {this}
+funding.FundingDetermination.addFundingComponent(funding.FundingDetermination.FundingComponent)#phrase.action = add funding component {0} to {this}
+
+# funding.FundingDetermination.EligibilityResult
+funding.FundingDetermination.EligibilityResult#concept.label = eligibility result
+funding.FundingDetermination.EligibilityResult.new(java.lang.String,funding.FundingDetermination.EligibilityStatus)#phrase.action = create a new eligibility result with program type {0} and status {1}
+funding.FundingDetermination.EligibilityResult.addReason(java.lang.String)#phrase.action = add reason {0} to {this}
+funding.FundingDetermination.EligibilityResult.addPolicyRef(java.lang.String)#phrase.action = add policy reference {0} to {this}
+funding.FundingDetermination.EligibilityResult.scheme#phrase.navigation = {scheme} of {this}
+funding.FundingDetermination.EligibilityResult.status#phrase.navigation = {status} of {this}
+
+# funding.FundingDetermination.FundingComponent
+funding.FundingDetermination.FundingComponent#concept.label = funding component
+funding.FundingDetermination.FundingComponent.new(java.lang.String,funding.FundingDetermination.FundingComponent.ComponentBasis,double,double)#phrase.action = create a new funding component with code {0}, basis {1}, quantity {2} and rate {3}
+funding.FundingDetermination.FundingComponent.componentCode#phrase.navigation = {component code} of {this}
+funding.FundingDetermination.FundingComponent.basis#phrase.navigation = {basis} of {this}
+funding.FundingDetermination.FundingComponent.quantity#phrase.navigation = {quantity} of {this}
+funding.FundingDetermination.FundingComponent.rate#phrase.navigation = {rate} of {this}
+funding.FundingDetermination.FundingComponent.amount#phrase.navigation = {amount} of {this}
+
+# Enumerations
+funding.Child.BaseProgramType.THREE_YEAR_OLD_KINDER#phrase.navigation = THREE_YEAR_OLD_KINDER
+funding.Child.BaseProgramType.PRE_PREP#phrase.navigation = PRE_PREP
+funding.FundingDetermination.EligibilityStatus.ELIGIBLE#phrase.navigation = ELIGIBLE
+funding.FundingDetermination.EligibilityStatus.INELIGIBLE#phrase.navigation = INELIGIBLE
+funding.FundingDetermination.EligibilityStatus.CONDITIONAL#phrase.navigation = CONDITIONAL
+funding.FundingDetermination.FundingComponent.ComponentBasis.PER_CHILD#phrase.navigation = PER_CHILD
+funding.FundingDetermination.FundingComponent.ComponentBasis.PER_HOUR#phrase.navigation = PER_HOUR
+funding.FundingDetermination.FundingComponent.ComponentBasis.PER_SERVICE#phrase.navigation = PER_SERVICE
+funding.FundingDetermination.FundingComponent.ComponentBasis.ONE_OFF#phrase.navigation = ONE_OFF
+
+# java.time.LocalDate
+java.time.LocalDate#concept.label = date

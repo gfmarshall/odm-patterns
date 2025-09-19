@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.dt:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.dt="http://ilog.rules.studio/model/dt.ecore">
+  <n>Allocation Priority Table</n>
+  <uuid>l1hpofp-ffm9-4f66-9f8i-o26fgkffgkfs</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.dt:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.dt="http://ilog.rules.studio/model/dt.ecore">
+  <name>Allocation Priority Table</name>
+  <uuid>l1hpofp-ffm9-4f66-9f8i-o26fgkffgkfs</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[<decision-table>
+  <input>the allocation priority codes of the application from 'the eligibility request' contains "ABORIGINAL_TSI"</input>
+  <input>the allocation priority codes of the application from 'the eligibility request' contains "REFUGEE_ASYLUM_SEEKER"</input>
+  <input>the allocation priority codes of the application from 'the eligibility request' contains "OOHC"</input>
+  <input>the allocation priority codes of the application from 'the eligibility request' contains "DISABILITY"</input>
+  <input>the allocation priority codes of the application from 'the eligibility request' contains "SIBLING"</input>
+  <input>the allocation priority codes of the application from 'the eligibility request' contains "LOCAL"</input>
+  <output>the allocation priority rank</output>
+  <rule>
+    <condition>true</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <output>1</output>
+  </rule>
+  <rule>
+    <condition>false</condition>
+    <condition>true</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <output>2</output>
+  </rule>
+  <rule>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>true</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <output>3</output>
+  </rule>
+  <rule>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>true</condition>
+    <condition>any</condition>
+    <condition>any</condition>
+    <output>4</output>
+  </rule>
+  <rule>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>true</condition>
+    <condition>any</condition>
+    <output>5</output>
+  </rule>
+  <rule>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>true</condition>
+    <output>6</output>
+  </rule>
+  <rule>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <condition>false</condition>
+    <output>7</output>
+  </rule>
+</decision-table>]]]]></definition>
+</ilog.rules.studio.model.dt:DecisionTable>

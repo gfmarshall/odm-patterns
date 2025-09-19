@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.ruleflow:RuleFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.ruleflow="http://ilog.rules.studio/model/ruleflow.ecore">
+  <n>Calculation_Ruleflow</n>
+  <uuid>5c7f9adb-4e29-5c6c-963g-4edcg5ga0g3a</uuid>
+  <locale>en_US</locale>
+  <categories>funding</categories>
+  <rfModel>
+    <tasks name="Input Validation" type="RuleTask">
+      <description>Validate All Request Inputs</description>
+      <task>funding-calculation-validation</task>
+      <ExecutionMode>Fastpath</ExecutionMode>
+      <ExitCriteria>None</ExitCriteria>
+      <taskDefinition>
+        <RuleList>
+          <Package Name="funding.calculation.validation"/>
+        </RuleList>
+      </taskDefinition>
+    </tasks>
+    <tasks name="Validation Check" type="DecisionTask">
+      <description>Check Validation Results</description>
+    </tasks>
+    <tasks name="Validation Failed" type="StopTask" termination="true">
+      <description>Validation Failed - End Flow</description>
+    </tasks>
+    <tasks name="Load Rates and Hours" type="RuleTask">
+      <description>Load Rates and Hours from Configuration</description>
+      <task>funding-calculation-load-config</task>
+      <ExecutionMode>RetePlus</ExecutionMode>
+      <ExitCriteria>None</ExitCriteria>
+      <taskDefinition>
+        <RuleList>
+          <Package Name="funding.calculation.config"/>
+        </RuleList>
+      </taskDefinition>
+    </tasks>
+    <tasks name="Base Components" type="RuleTask">
+      <description>Calculate Base Program Funding Components</description>
+      <task>funding-calculation-base</task>
+      <ExecutionMode>RetePlus</ExecutionMode>
+      <ExitCriteria>None</ExitCriteria>
+      <taskDefinition>
+        <RuleList>
+          <Package Name="funding.calculation.base"/>
+        </RuleList>
+      </taskDefinition>
+    </tasks>
+    <tasks name="Supplement Components" type="RuleTask">
+      <description>Calculate Supplement Funding Components</description>
+      <task>funding-calculation-supplements</task>
+      <ExecutionMode>RetePlus</ExecutionMode>
+      <ExitCriteria>None</ExitCriteria>
+      <taskDefinition>
+        <RuleList>
+          <Package Name="funding.calculation.supplements"/>
+        </RuleList>
+      </taskDefinition>
+    </tasks>
+    <tasks name="KFS Processing" type="RuleTask">
+      <description>Apply KFS Offset to Residual Fees</description>
+      <task>funding-calculation-kfs</task>
+      <ExecutionMode>RetePlus</ExecutionMode>
+      <ExitCriteria>None</ExitCriteria>
+      <taskDefinition>
+        <RuleList>
+          <Package Name="funding.calculation.kfs"/>
+        </RuleList>
+      </taskDefinition>
+    </tasks>
+    <tasks name="Output Preparation" type="RuleTask">
+      <description>Finalize Output Response</description>
+      <task>funding-calculation-output</task>
+      <ExecutionMode>Fastpath</ExecutionMode>
+      <ExitCriteria>None</ExitCriteria>
+    </tasks>
+    <tasks name="End" type="StopTask" termination="true">
+      <description>Normal Flow Completion</description>
+    </tasks>
+    <startNode>1</startNode>
+    <endNode>8</endNode>
+    <endNode>3</endNode>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="1" name="Input Validation" x="109" y="41">
+      <sourceLinks id="Link_1_2" targetNode="2"/>
+    </nodes>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="2" name="Validation Check" x="109" y="124">
+      <sourceLinks id="Link_2_3" targetNode="3">
+        <constraint><![CDATA[processingStatus == "ERROR"]]></constraint>
+      </sourceLinks>
+      <sourceLinks id="Link_2_4" targetNode="4">
+        <constraint><![CDATA[processingStatus != "ERROR"]]></constraint>
+      </sourceLinks>
+    </nodes>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="3" name="Validation Failed" x="277" y="124" termination="true"/>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="4" name="Load Rates and Hours" x="109" y="207">
+      <sourceLinks id="Link_4_5" targetNode="5"/>
+    </nodes>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="5" name="Base Components" x="109" y="290">
+      <sourceLinks id="Link_5_6" targetNode="6"/>
+    </nodes>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="6" name="Supplement Components" x="109" y="373">
+      <sourceLinks id="Link_6_7" targetNode="7"/>
+    </nodes>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="7" name="KFS Processing" x="109" y="456">
+      <sourceLinks id="Link_7_9" targetNode="9"/>
+    </nodes>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="8" name="End" x="109" y="622" termination="true"/>
+    <nodes xsi:type="ilog.rules.studio.model.ruleflow:TaskNode" id="9" name="Output Preparation" x="109" y="539">
+      <sourceLinks id="Link_9_8" targetNode="8"/>
+    </nodes>
+  </rfModel>
+</ilog.rules.studio.model.ruleflow:RuleFlow>
