@@ -12,21 +12,21 @@
     <entries xsi:type="ilog.rules.studio.model.bom:BOMEntry" name="funding" url="platform:/vic-ece-rules/bom/funding.bom" origin="xom:/vic-ece-rules/vic-ece-xom"/>
   </paths>
   <modelFolders xsi:type="ilog.rules.studio.model.base:SourceFolder">
-    <name>rules</name>
+    <name>Rules</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.bom:BOMFolder">
-    <name>bom</name>
+    <name>BOM</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.rule:TemplateFolder">
-    <name>templates</name>
+    <name>Templates</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.query:QueryFolder">
-    <name>queries</name>
+    <name>Queries</name>
   </modelFolders>
   <modelFolders xsi:type="com.ibm.rules.studio.model.decisionservice:OperationFolder">
-    <name>deployment</name>
+    <name>Deployment</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.base:ResourceFolder">
-    <name>resources</name>
+    <name>Resources</name>
   </modelFolders>
 </ilog.rules.studio.model.base:RuleProject>

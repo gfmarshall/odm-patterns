@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
-  <name>age</name>
-  <uuid>644cab38-9aac-4cea-9567-60d5d1e5ce50</uuid>
-</ilog.rules.studio.model.base:RulePackage>

@@ -1,7 +1,0 @@
-Supplement Code,Effective From,Effective To,Child Age Min,Child Age Max,Indigenous Status Required,Out Of Home Care Required,Refugee Status Required,Disability Required,Priority Code Required,Description,Policy Reference
-ESK,2023-07-01,2026-06-30,3,4,true,true,true,false,false,Early Start Kindergarten supplement for Aboriginal/Torres Strait Islander children,ESK_POLICY_1.1
-ESK,2023-07-01,2026-06-30,3,4,false,true,false,false,false,Early Start Kindergarten supplement for children in Out of Home Care,ESK_POLICY_1.2
-ESK,2023-07-01,2026-06-30,3,4,false,false,true,false,false,Early Start Kindergarten supplement for refugee or asylum seeker children,ESK_POLICY_1.3
-INCLUSION,2023-07-01,2026-06-30,3,5,false,false,false,true,false,Inclusion supplement for children with disability or additional needs,INCLUSION_POLICY_2.1
-KFS,2023-07-01,2026-06-30,3,5,false,false,false,false,true,Kindergarten Fee Subsidy for families with health care card or other concession,KFS_POLICY_3.1
-ADDITIONAL_YEAR,2023-07-01,2026-06-30,4,5,false,false,false,false,false,Additional year of funded kindergarten where development delays identified,ADDITIONAL_YEAR_POLICY_4.1

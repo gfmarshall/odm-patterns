@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.bom:BOM xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.bom="http://ilog.rules.studio/model/bom.ecore">
+  <n>funding</n>
+  <uuid>81c23f4a-2dc4-4c8d-b985-19731546aa25</uuid>
+  <version>1.0</version>
+  <vocabularies>
+    <vocabularyRef>
+      <n>default</n>
+    </vocabularyRef>
+    <vocabularyRef>
+      <n>funding_en</n>
+    </vocabularyRef>
+  </vocabularies>
+  <types>
+    <javaClass>
+      <n>funding.Child</n>
+      <javaClassRef classPath="funding.Child"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.Child$BaseProgramType</n>
+      <javaClassRef classPath="funding.Child$BaseProgramType"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.Person</n>
+      <javaClassRef classPath="funding.Person"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.Guardian</n>
+      <javaClassRef classPath="funding.Guardian"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.Family</n>
+      <javaClassRef classPath="funding.Family"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.Service</n>
+      <javaClassRef classPath="funding.Service"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.ServiceProvider</n>
+      <javaClassRef classPath="funding.ServiceProvider"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.EligibilityRequest</n>
+      <javaClassRef classPath="funding.EligibilityRequest"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.EligibilityRequest$EnrolmentApplication</n>
+      <javaClassRef classPath="funding.EligibilityRequest$EnrolmentApplication"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.EligibilityResponse</n>
+      <javaClassRef classPath="funding.EligibilityResponse"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.CalculationRequest</n>
+      <javaClassRef classPath="funding.CalculationRequest"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.CalculationResponse</n>
+      <javaClassRef classPath="funding.CalculationResponse"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.FundingDetermination</n>
+      <javaClassRef classPath="funding.FundingDetermination"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.FundingDetermination$EligibilityResult</n>
+      <javaClassRef classPath="funding.FundingDetermination$EligibilityResult"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.FundingDetermination$EligibilityStatus</n>
+      <javaClassRef classPath="funding.FundingDetermination$EligibilityStatus"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.FundingDetermination$FundingComponent</n>
+      <javaClassRef classPath="funding.FundingDetermination$FundingComponent"/>
+    </javaClass>
+    <javaClass>
+      <n>funding.FundingDetermination$FundingComponent$ComponentBasis</n>
+      <javaClassRef classPath="funding.FundingDetermination$FundingComponent$ComponentBasis"/>
+    </javaClass>
+    <javaClass>
+      <n>java.time.LocalDate</n>
+      <javaClassRef classPath="java.time.LocalDate"/>
+    </javaClass>
+  </types>
+  <schemaBuild>
+    <execution>full</execution>
+  </schemaBuild>
+  <modelExtensions>
+    <modelExtension>
+      <executionMode>sequential</executionMode>
+    </modelExtension>
+  </modelExtensions>
+</ilog.rules.studio.model.bom:BOM>

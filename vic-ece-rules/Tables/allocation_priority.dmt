@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.ibm.rules.studio.model.decisiontable:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.ibm.rules.studio.model.decisiontable="http://com.ibm.rules.studio/model/decisiontable.ecore">
+  <name>Allocation Priority</name>
+  <uuid>l1hpofp-ffm9-4f66-9f8i-o26fgkffgkfs</uuid>
+  <locale>en_US</locale>
+  <definition>
+<definitions xmlns="http://www.omg.org/spec/DMN/20180521/MODEL/" id="decisions" name="Allocation Priority" namespace="http://vic-ece-rules.odm.ibm.com/tables">
+    <extensionElements/>
+    <decision id="AllocationPriority" name="Allocation Priority">
+        <decisionTable hitPolicy="FIRST">
+            <input id="input_1" label="Has Aboriginal or TSI Status">
+                <inputExpression>
+                    <text>hasAboriginalStatus</text>
+                </inputExpression>
+            </input>
+            <input id="input_2" label="Has Refugee Status">
+                <inputExpression>
+                    <text>hasRefugeeStatus</text>
+                </inputExpression>
+            </input>
+            <input id="input_3" label="Has Out of Home Care Status">
+                <inputExpression>
+                    <text>hasOutOfHomeCareStatus</text>
+                </inputExpression>
+            </input>
+            <input id="input_4" label="Has Disability">
+                <inputExpression>
+                    <text>hasDisability</text>
+                </inputExpression>
+            </input>
+            <input id="input_5" label="Has Sibling">
+                <inputExpression>
+                    <text>hasSibling</text>
+                </inputExpression>
+            </input>
+            <input id="input_6" label="Is Local Area">
+                <inputExpression>
+                    <text>isLocalArea</text>
+                </inputExpression>
+            </input>
+            <output id="output_1" label="Priority Rank" name="priorityRank"/>
+            <rule id="rule1">
+                <inputEntry>
+                    <text>true</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>1</text>
+                </outputEntry>
+            </rule>
+            <rule id="rule2">
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>true</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>2</text>
+                </outputEntry>
+            </rule>
+            <rule id="rule3">
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>true</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>3</text>
+                </outputEntry>
+            </rule>
+            <rule id="rule4">
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>true</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>4</text>
+                </outputEntry>
+            </rule>
+            <rule id="rule5">
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>true</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>-</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>5</text>
+                </outputEntry>
+            </rule>
+            <rule id="rule6">
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>true</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>6</text>
+                </outputEntry>
+            </rule>
+            <rule id="rule7">
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <inputEntry>
+                    <text>false</text>
+                </inputEntry>
+                <outputEntry>
+                    <text>7</text>
+                </outputEntry>
+            </rule>
+        </decisionTable>
+    </decision>
+</definitions>
+  </definition>
+</com.ibm.rules.studio.model.decisiontable:DecisionTable>
