@@ -6,6 +6,7 @@ odm-on-cloud-getting-started/
 
 *.jar
 *.class
+vic-ece-rules/bin
 
 # Logs
 *.log

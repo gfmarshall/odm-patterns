@@ -8,25 +8,25 @@
     <entries xsi:type="ilog.rules.studio.model.xom:LibraryXOMPathEntry" name="org.eclipse.jdt.launching.JRE_CONTAINER" url="file:org.eclipse.jdt.launching.JRE_CONTAINER" kind="LIBRARY"/>
     <entries xsi:type="ilog.rules.studio.model.xom:SystemXOMPathEntry" name="vic-ece-xom" url="platform:/vic-ece-xom" kind="JAVA_PROJECT"/>
   </paths>
-  <paths xsi:type="ilog.rules.studio.model.bom:BOMPath" pathID="BOM">
-    <entries xsi:type="ilog.rules.studio.model.bom:BOMEntry" name="funding" url="platform:/vic-ece-rules/bom/funding.bom" origin="xom:/vic-ece-rules/vic-ece-xom"/>
+  <paths xsi:type="ilog.rules.studio.model.bom:BOMPath" pathID="BOM" pathEntriesModified="true">
+    <entries xsi:type="ilog.rules.studio.model.bom:BOMEntry" name="funding" url="platform:/vic-ece-rules/bom/funding.bom"/>
   </paths>
   <modelFolders xsi:type="ilog.rules.studio.model.base:SourceFolder">
-    <name>Rules</name>
-  </modelFolders>
-  <modelFolders xsi:type="ilog.rules.studio.model.bom:BOMFolder">
-    <name>BOM</name>
+    <name>rules</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.rule:TemplateFolder">
-    <name>Templates</name>
+    <name>templates</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.query:QueryFolder">
-    <name>Queries</name>
+    <name>queries</name>
   </modelFolders>
   <modelFolders xsi:type="com.ibm.rules.studio.model.decisionservice:OperationFolder">
-    <name>Deployment</name>
+    <name>deployment</name>
   </modelFolders>
   <modelFolders xsi:type="ilog.rules.studio.model.base:ResourceFolder">
-    <name>Resources</name>
+    <name>resources</name>
+  </modelFolders>
+  <modelFolders xsi:type="ilog.rules.studio.model.bom:BOMFolder">
+    <name>bom</name>
   </modelFolders>
 </ilog.rules.studio.model.base:RuleProject>
