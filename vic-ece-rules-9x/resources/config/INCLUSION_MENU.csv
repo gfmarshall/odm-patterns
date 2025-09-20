@@ -1,0 +1,5 @@
+componentCode,description,basis,rate,startDate,endDate
+INCLUSION_BASE,Basic inclusion support,PER_CHILD,1000.00,2026-01-01,2026-12-31
+INCLUSION_INTENSIVE,Intensive support loading,PER_CHILD,2500.00,2026-01-01,2026-12-31
+INCLUSION_EQUIPMENT,Equipment grant,ONE_OFF,500.00,2026-01-01,2026-12-31
+INCLUSION_PD,Professional development,PER_SERVICE,1000.00,2026-01-01,2026-12-31

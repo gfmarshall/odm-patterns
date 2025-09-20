@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore" xmlns:com.ibm.rules.studio.model.decisionservice="http://com.ibm.rules.studio/model/decisionservice.ecore">
+  <name>Determine Priority Group 2026</name>
+  <uuid>c93a5d21-e794-42fb-bf37-7c0a9b6583e1</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+	the funding year of 'the eligibility request' is 2026
+	and the base program type of 'the funding determination' is PRE_PREP
+	and the child of 'the eligibility request' is not null
+then
+	if the child of 'the eligibility request' is aboriginal or torres strait islander
+	then
+		set the priority group of 'the funding determination' to "ABORIGINAL_TSI" ;
+	else if the child of 'the eligibility request' has refugee or asylum status
+	then
+		set the priority group of 'the funding determination' to "REFUGEE_ASYLUM" ;
+	else if the child of 'the eligibility request' is in out of home care
+	then
+		set the priority group of 'the funding determination' to "CHILD_PROTECTION" ;
+	else if the funding determination is eligible for scheme "ESK"
+	then
+		set the priority group of 'the funding determination' to "ESK_AEL" ;
+	else
+		set the priority group of 'the funding determination' to "UNIVERSAL" ;
+
+	if the priority group of 'the funding determination' is one of { "ABORIGINAL_TSI" , "REFUGEE_ASYLUM" , "CHILD_PROTECTION" , "ESK_AEL" }
+	then
+		add "2026 Priority Group: " + the priority group of 'the funding determination' to the reasons of a new eligibility result where
+			the scheme is "PRIORITY_GROUP" ,
+			the status is ELIGIBLE ;
+		add this eligibility result to the eligibility results of 'the funding determination' ;
+		add "cfg://priority-groups/2026" to the policy refs of 'the funding determination' ;
+]]></definition>
+  <parameters>
+    <parameter name="eligibilityRequest" type="funding.EligibilityRequest"/>
+    <parameter name="fundingDetermination" direction="inout" type="funding.FundingDetermination"/>
+  </parameters>
+</ilog.rules.studio.model.brl:ActionRule>

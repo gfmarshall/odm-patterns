@@ -50,6 +50,8 @@ public class EligibilityRequest implements Serializable {
 		private int requestedWeeklyHours;
 
 		private List<String> allocationPriorityCodes = new ArrayList<>();
+		
+		private String priorityGroup;
 
 		/**
 		 * Default constructor
@@ -108,6 +110,22 @@ public class EligibilityRequest implements Serializable {
 
 		public void addAllocationPriorityCode(String code) {
 			this.allocationPriorityCodes.add(code);
+		}
+		
+		/**
+		 * Get the priority group
+		 * @return The priority group
+		 */
+		public String getPriorityGroup() {
+			return priorityGroup;
+		}
+
+		/**
+		 * Set the priority group
+		 * @param priorityGroup The priority group
+		 */
+		public void setPriorityGroup(String priorityGroup) {
+			this.priorityGroup = priorityGroup;
 		}
 	}
 

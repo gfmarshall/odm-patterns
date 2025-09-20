@@ -1,0 +1,10 @@
+priorityCode,description,rank,startYear,endYear
+ABORIGINAL_TSI,Aboriginal or Torres Strait Islander,1,2026,2099
+OOHC,Out of Home Care,2,2026,2099
+REFUGEE_ASYLUM_SEEKER,Refugee or Asylum Seeker background,3,2026,2099
+DISABILITY,Disability or Additional Needs,4,2026,2099
+ESK_AEL,Attended Early Start Kindergarten or Access to Early Learning,5,2026,2099
+CONCESSION_CARD,Commonwealth Concession Card Holder,6,2028,2099
+MULTIPLE_BIRTH,Multiple Birth (Triplets or more),7,2028,2099
+SIBLING,Sibling attending service,8,2026,2099
+LOCAL,Local area resident,9,2026,2099

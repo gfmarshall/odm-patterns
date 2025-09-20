@@ -14,6 +14,7 @@ import ilog.rules.bom.annotations.*;
  * FundingDetermination class - represents the outcome of funding eligibility
  * and calculation rules. Simple POJO design for IBM ODM as per project
  * guidelines.
+ * Updated for ODM 9.5.x with Pre-Prep rollout and Free Kinder support.
  */
 public class FundingDetermination implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +41,15 @@ public class FundingDetermination implements Serializable {
 	private List<String> decisionEvidenceRefs = new ArrayList<>();
 
 	private double totalAmount;
+	
+	// Free Kinder fields
+	private boolean freeKinderEligible;
+	private double freeKinderOffset;
+	private double residualFeeAfterOffset;
+	private double effectiveWeeklyRate;
+	
+	// Priority group field
+	private String priorityGroup;
 
 	/**
 	 * EligibilityResult inner class to represent eligibility for each scheme
@@ -349,6 +359,86 @@ public class FundingDetermination implements Serializable {
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
+	
+	/**
+	 * Get whether the child is eligible for Free Kinder
+	 * @return true if eligible for Free Kinder
+	 */
+	public boolean isFreeKinderEligible() {
+		return freeKinderEligible;
+	}
+
+	/**
+	 * Set whether the child is eligible for Free Kinder
+	 * @param freeKinderEligible true if eligible for Free Kinder
+	 */
+	public void setFreeKinderEligible(boolean freeKinderEligible) {
+		this.freeKinderEligible = freeKinderEligible;
+	}
+
+	/**
+	 * Get the Free Kinder offset amount
+	 * @return The Free Kinder offset amount
+	 */
+	public double getFreeKinderOffset() {
+		return freeKinderOffset;
+	}
+
+	/**
+	 * Set the Free Kinder offset amount
+	 * @param freeKinderOffset The Free Kinder offset amount
+	 */
+	public void setFreeKinderOffset(double freeKinderOffset) {
+		this.freeKinderOffset = freeKinderOffset;
+	}
+
+	/**
+	 * Get the residual fee after offset
+	 * @return The residual fee after offset
+	 */
+	public double getResidualFeeAfterOffset() {
+		return residualFeeAfterOffset;
+	}
+
+	/**
+	 * Set the residual fee after offset
+	 * @param residualFeeAfterOffset The residual fee after offset
+	 */
+	public void setResidualFeeAfterOffset(double residualFeeAfterOffset) {
+		this.residualFeeAfterOffset = residualFeeAfterOffset;
+	}
+
+	/**
+	 * Get the effective weekly rate
+	 * @return The effective weekly rate
+	 */
+	public double getEffectiveWeeklyRate() {
+		return effectiveWeeklyRate;
+	}
+
+	/**
+	 * Set the effective weekly rate
+	 * @param effectiveWeeklyRate The effective weekly rate
+	 */
+	public void setEffectiveWeeklyRate(double effectiveWeeklyRate) {
+		this.effectiveWeeklyRate = effectiveWeeklyRate;
+	}
+	
+	/**
+	 * Get the priority group
+	 * @return The priority group
+	 */
+	public String getPriorityGroup() {
+		return priorityGroup;
+	}
+
+	/**
+	 * Set the priority group
+	 * @param priorityGroup The priority group
+	 */
+	public void setPriorityGroup(String priorityGroup) {
+		this.priorityGroup = priorityGroup;
+	}
 
 	/**
 	 * Get the eligibility status for a specific scheme
@@ -374,5 +464,45 @@ public class FundingDetermination implements Serializable {
 	public boolean isEligibleForScheme(String scheme) {
 		EligibilityStatus status = getEligibilityStatusForScheme(scheme);
 		return status == EligibilityStatus.ELIGIBLE;
+	}
+	
+	/**
+	 * Calculate free kinder offset based on program type, service type, and hours
+	 * @param programType The base program type
+	 * @param serviceType The service delivery setting
+	 * @param hours Hours per week
+	 * @param annualOffset Annual offset amount from config
+	 */
+	public void calculateFreeKinderOffset(Child.BaseProgramType programType, 
+			Service.DeliverySetting serviceType, int hours, double annualOffset) {
+		this.freeKinderOffset = annualOffset;
+		
+		// Calculate weekly rate based on 40 weeks standard year
+		if (weeksPerYear > 0) {
+			this.effectiveWeeklyRate = annualOffset / weeksPerYear;
+		} else {
+			// Default to 40 weeks if not set
+			this.effectiveWeeklyRate = annualOffset / 40.0;
+		}
+	}
+	
+	/**
+	 * Apply KFS offset to residual fee
+	 * @param familyFee Original fee before offset
+	 * @param kfsAmount KFS subsidy amount
+	 * @return Final fee amount after all offsets (never negative)
+	 */
+	public double applyKfsToResidualFee(double familyFee, double kfsAmount) {
+		// First apply Free Kinder offset
+		double afterFreeKinder = Math.max(0.0, familyFee - this.freeKinderOffset);
+		this.residualFeeAfterOffset = afterFreeKinder;
+		
+		// Then apply KFS if eligible
+		if (this.hasSupplementCode("KFS")) {
+			double afterKfs = Math.max(0.0, afterFreeKinder - kfsAmount);
+			return afterKfs;
+		}
+		
+		return afterFreeKinder;
 	}
 }

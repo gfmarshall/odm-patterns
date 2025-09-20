@@ -10,6 +10,7 @@ import ilog.rules.bom.annotations.*;
 /**
  * Service class - represents a service site in the Victorian ECE funding model.
  * Simple POJO design for IBM ODM as per project guidelines.
+ * Updated for ODM 9.5.x with Pre-Prep rollout and Free Kinder support.
  */
 public class Service implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,12 +31,146 @@ public class Service implements Serializable {
 	private boolean deliversVicGovFundedKindergartenProgramInYear;
 
 	private Map<String, Integer> prePrepHoursByCohort = new HashMap<>();
+	
+	// Pre-Prep rollout fields
+	private PrePrepConfig prePrepConfig;
+	
+	// Free Kinder fields
+	private boolean participatesInFreeKinder;
+	private FeeStructure feeStructure;
 
 	/**
 	 * Delivery setting options for a service
 	 */
 	public enum DeliverySetting {
 		SESSIONAL_STANDALONE, LONG_DAY_CARE_INTEGRATED, SCHOOL_BASED_KINDER
+	}
+	
+	/**
+	 * Pre-Prep configuration including rollout details
+	 */
+	public static class PrePrepConfig implements Serializable {
+		private static final long serialVersionUID = 1L;
+		
+		private int rolloutYear;
+		private String rolloutGroup;
+		private int initialHours;
+		private int midStageHours;
+		private int finalHours;
+		private int midStageYear;
+		private int finalStageYear;
+		
+		public PrePrepConfig() {}
+		
+		public int getRolloutYear() {
+			return rolloutYear;
+		}
+		
+		public void setRolloutYear(int rolloutYear) {
+			this.rolloutYear = rolloutYear;
+		}
+		
+		public String getRolloutGroup() {
+			return rolloutGroup;
+		}
+		
+		public void setRolloutGroup(String rolloutGroup) {
+			this.rolloutGroup = rolloutGroup;
+		}
+		
+		public int getInitialHours() {
+			return initialHours;
+		}
+		
+		public void setInitialHours(int initialHours) {
+			this.initialHours = initialHours;
+		}
+		
+		public int getMidStageHours() {
+			return midStageHours;
+		}
+		
+		public void setMidStageHours(int midStageHours) {
+			this.midStageHours = midStageHours;
+		}
+		
+		public int getFinalHours() {
+			return finalHours;
+		}
+		
+		public void setFinalHours(int finalHours) {
+			this.finalHours = finalHours;
+		}
+		
+		public int getMidStageYear() {
+			return midStageYear;
+		}
+		
+		public void setMidStageYear(int midStageYear) {
+			this.midStageYear = midStageYear;
+		}
+		
+		public int getFinalStageYear() {
+			return finalStageYear;
+		}
+		
+		public void setFinalStageYear(int finalStageYear) {
+			this.finalStageYear = finalStageYear;
+		}
+		
+		/**
+		 * Get maximum available hours for a given program year based on rollout schedule
+		 * @param programYear The year to check hours for
+		 * @return Maximum available hours
+		 */
+		public int getMaxHoursForYear(int programYear) {
+			if (programYear >= finalStageYear) {
+				return finalHours;
+			} else if (programYear >= midStageYear) {
+				return midStageHours;
+			} else if (programYear >= rolloutYear) {
+				return initialHours;
+			} else {
+				return 0; // Not yet rolled out
+			}
+		}
+	}
+	
+	/**
+	 * Fee structure for the service
+	 */
+	public static class FeeStructure implements Serializable {
+		private static final long serialVersionUID = 1L;
+		
+		private double hourlyRate;
+		private double weeklyRate;
+		private double annualRate;
+		
+		public FeeStructure() {}
+		
+		public double getHourlyRate() {
+			return hourlyRate;
+		}
+		
+		public void setHourlyRate(double hourlyRate) {
+			this.hourlyRate = hourlyRate;
+		}
+		
+		public double getWeeklyRate() {
+			return weeklyRate;
+		}
+		
+		public void setWeeklyRate(double weeklyRate) {
+			this.weeklyRate = weeklyRate;
+		}
+		
+		public double getAnnualRate() {
+			return annualRate;
+		}
+		
+		public void setAnnualRate(double annualRate) {
+			this.annualRate = annualRate;
+		}
 	}
 
 	/**
@@ -164,5 +299,64 @@ public class Service implements Serializable {
 	 */
 	public boolean isEligibleToDeliverFundedKinder() {
 		return deliversVicGovFundedKindergartenProgramInYear;
+	}
+	
+	/**
+	 * Get the Pre-Prep configuration
+	 * @return The Pre-Prep configuration
+	 */
+	public PrePrepConfig getPrePrepConfig() {
+		return prePrepConfig;
+	}
+
+	/**
+	 * Set the Pre-Prep configuration
+	 * @param prePrepConfig The Pre-Prep configuration
+	 */
+	public void setPrePrepConfig(PrePrepConfig prePrepConfig) {
+		this.prePrepConfig = prePrepConfig;
+	}
+
+	/**
+	 * Check if this service participates in Free Kinder program
+	 * @return true if the service participates in Free Kinder
+	 */
+	public boolean isParticipatesInFreeKinder() {
+		return participatesInFreeKinder;
+	}
+
+	/**
+	 * Set whether this service participates in Free Kinder program
+	 * @param participatesInFreeKinder true if the service participates
+	 */
+	public void setParticipatesInFreeKinder(boolean participatesInFreeKinder) {
+		this.participatesInFreeKinder = participatesInFreeKinder;
+	}
+
+	/**
+	 * Get the fee structure for this service
+	 * @return The fee structure
+	 */
+	public FeeStructure getFeeStructure() {
+		return feeStructure;
+	}
+
+	/**
+	 * Set the fee structure for this service
+	 * @param feeStructure The fee structure
+	 */
+	public void setFeeStructure(FeeStructure feeStructure) {
+		this.feeStructure = feeStructure;
+	}
+	
+	/**
+	 * Check if a service is eligible for Pre-Prep in a specific year
+	 * @param programYear The year to check eligibility for
+	 * @return true if eligible for Pre-Prep in the specified year
+	 */
+	public boolean isEligibleForPrePrepInYear(int programYear) {
+		return prePrepConfig != null && 
+		       programYear >= prePrepConfig.getRolloutYear() && 
+		       isDeliversVicGovFundedKindergartenProgramInYear();
 	}
 }
