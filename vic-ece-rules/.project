@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>vic-ece-rules</name>
-	<comment></comment>
-	<projects>
-		<project>vic-ece-xom</project>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.wst.common.project.facet.core.builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>ilog.rules.studio.model.ruleBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>ilog.rules.studio.model.decisionProject</nature>
-		<nature>ilog.rules.studio.model.operationProject</nature>
-		<nature>ilog.rules.studio.model.ruleNature</nature>
-		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-	</natures>
+  <name>vic-ece-rules</name>
+  <comment></comment>
+  <projects>
+    <project>vic-ece-xom</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>com.ibm.rules.studio.model.decisionservice.ui.decisionServiceBuilder</name>
+    </buildCommand>
+    <buildCommand>
+      <name>com.ibm.rules.studio.model.decisionservice.ui.decisionServiceProjectBuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>com.ibm.rules.studio.model.decisionservice.ui.decisionServiceNature</nature>
+    <nature>com.ibm.rules.studio.model.decisionservice.ui.decisionServiceProjectNature</nature>
+  </natures>
 </projectDescription>

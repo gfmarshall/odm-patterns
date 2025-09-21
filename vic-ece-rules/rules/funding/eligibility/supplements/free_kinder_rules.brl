@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore" xmlns:com.ibm.rules.studio.model.decisionservice="http://com.ibm.rules.studio/model/decisionservice.ecore">
+  <name>Check Free Kinder Eligibility</name>
+  <uuid>d83e5a72-b9d4-47e7-a2b2-81d413ccf302</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+	the service of 'the eligibility request' is not null
+	and the service of 'the eligibility request' participates in free kinder
+then
+	set 'the funding determination' to be free kinder eligible ;
+	add "Service participates in Free Kinder program" to the reasons of a new eligibility result where
+		the scheme is "FREE_KINDER" ,
+		the status is ELIGIBLE ;
+	add this eligibility result to the eligibility results of 'the funding determination' ;
+	add "cfg://free-kinder/" + the funding year of 'the eligibility request' to the policy refs of 'the funding determination' ;
+else
+	add "Service does not participate in Free Kinder program" to the reasons of a new eligibility result where
+		the scheme is "FREE_KINDER" ,
+		the status is INELIGIBLE ;
+	add this eligibility result to the eligibility results of 'the funding determination' ;
+]]></definition>
+  <parameters>
+    <parameter name="eligibilityRequest" type="funding.EligibilityRequest"/>
+    <parameter name="fundingDetermination" direction="inout" type="funding.FundingDetermination"/>
+  </parameters>
+</ilog.rules.studio.model.brl:ActionRule>

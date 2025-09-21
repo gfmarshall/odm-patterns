@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<faceted-project>
-  <runtime name="IBM Operational Decision Manager 9.5"/>
-  <fixed facet="com.ibm.rules.studio.model.decisionservice.ui.decisionservicefacet"/>
-  <installed facet="com.ibm.rules.studio.model.decisionservice.ui.decisionservicefacet" version="9.5"/>
-</faceted-project>

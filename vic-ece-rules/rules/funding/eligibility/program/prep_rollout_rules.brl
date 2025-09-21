@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore" xmlns:com.ibm.rules.studio.model.decisionservice="http://com.ibm.rules.studio/model/decisionservice.ecore">
+  <name>Check Pre-Prep LGA Rollout</name>
+  <uuid>b82f3e92-c7a1-4efa-be4a-df2193da4815</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+	the service of 'the eligibility request' is not null
+	and the service of 'the eligibility request' is eligible to deliver funded kinder
+	and the base program type of 'the funding determination' is PRE_PREP
+	and the pre prep config of the service of 'the eligibility request' is not null
+then
+	set 'eligible for pre-prep' to the service of 'the eligibility request' is eligible for pre prep in year the program year of 'the eligibility request' ;
+	if 'eligible for pre-prep' is true
+	then
+		add "Pre-Prep rollout phase active for LGA" to the reasons of a new eligibility result where
+			the scheme is "PRE_PREP" ,
+			the status is ELIGIBLE ;
+		add this eligibility result to the eligibility results of 'the funding determination' ;
+		add "cfg://prep-rollout/" + the funding year of 'the eligibility request' to the policy refs of 'the funding determination' ;
+	else
+		add "Pre-Prep not yet rolled out to this LGA" to the reasons of a new eligibility result where
+			the scheme is "PRE_PREP" ,
+			the status is INELIGIBLE ;
+		add this eligibility result to the eligibility results of 'the funding determination' ;
+		add "cfg://prep-rollout/" + the funding year of 'the eligibility request' to the policy refs of 'the funding determination' ;
+		set the base program type of 'the funding determination' to THREE_YEAR_OLD_KINDER ;
+]]></definition>
+  <parameters>
+    <parameter name="eligibilityRequest" type="funding.EligibilityRequest"/>
+    <parameter name="fundingDetermination" direction="inout" type="funding.FundingDetermination"/>
+  </parameters>
+</ilog.rules.studio.model.brl:ActionRule>

@@ -1,0 +1,231 @@
+[
+  {
+    "testName": "Pre-Prep 2026 Priority Group Aboriginal",
+    "description": "Child with Aboriginal background in 2026 priority group",
+    "input": {
+      "fundingYear": 2026,
+      "programYear": 2026,
+      "child": {
+        "personId": "C-123",
+        "dateOfBirth": "2022-06-15",
+        "indigenousStatus": "ABORIGINAL",
+        "outOfHomeCareStatus": false
+      },
+      "service": {
+        "serviceId": "S-1",
+        "lgaCode": "LGA_301",
+        "deliversVicGovFundedKindergartenProgramInYear": true,
+        "participatesInFreeKinder": true,
+        "prePrepConfig": {
+          "rolloutYear": 2026,
+          "rolloutGroup": "PHASE_1",
+          "initialHours": 20,
+          "midStageHours": 25,
+          "finalHours": 30,
+          "midStageYear": 2029,
+          "finalStageYear": 2031
+        }
+      },
+      "application": {
+        "requestedBaseProgramType": "PRE_PREP",
+        "requestedWeeklyHours": 25
+      }
+    },
+    "expectedOutput": {
+      "baseProgramType": "PRE_PREP",
+      "priorityGroup": "ABORIGINAL_TSI",
+      "hoursPerWeekApproved": 25,
+      "freeKinderEligible": true,
+      "eligibilityResults": [
+        {"scheme": "PRE_PREP", "status": "ELIGIBLE"},
+        {"scheme": "PRIORITY_GROUP", "status": "ELIGIBLE"},
+        {"scheme": "FREE_KINDER", "status": "ELIGIBLE"}
+      ]
+    }
+  },
+  {
+    "testName": "Pre-Prep 2026 Universal Group Hours Limit",
+    "description": "Universal group child limited to initial hours in 2026",
+    "input": {
+      "fundingYear": 2026,
+      "programYear": 2026,
+      "child": {
+        "personId": "C-456",
+        "dateOfBirth": "2022-03-15",
+        "indigenousStatus": "NONE",
+        "outOfHomeCareStatus": false
+      },
+      "service": {
+        "serviceId": "S-1",
+        "lgaCode": "LGA_301",
+        "deliversVicGovFundedKindergartenProgramInYear": true,
+        "participatesInFreeKinder": true,
+        "prePrepConfig": {
+          "rolloutYear": 2026,
+          "rolloutGroup": "PHASE_1",
+          "initialHours": 20,
+          "midStageHours": 25,
+          "finalHours": 30,
+          "midStageYear": 2029,
+          "finalStageYear": 2031
+        }
+      },
+      "application": {
+        "requestedBaseProgramType": "PRE_PREP",
+        "requestedWeeklyHours": 25
+      }
+    },
+    "expectedOutput": {
+      "baseProgramType": "PRE_PREP",
+      "priorityGroup": "UNIVERSAL",
+      "hoursPerWeekApproved": 20,
+      "freeKinderEligible": true,
+      "eligibilityResults": [
+        {"scheme": "PRE_PREP", "status": "ELIGIBLE"},
+        {"scheme": "FREE_KINDER", "status": "ELIGIBLE"}
+      ]
+    }
+  },
+  {
+    "testName": "Pre-Prep Not Yet Rolled Out",
+    "description": "Service in LGA where Pre-Prep is not yet rolled out",
+    "input": {
+      "fundingYear": 2026,
+      "programYear": 2026,
+      "child": {
+        "personId": "C-789",
+        "dateOfBirth": "2022-03-15",
+        "indigenousStatus": "NONE",
+        "outOfHomeCareStatus": false
+      },
+      "service": {
+        "serviceId": "S-2",
+        "lgaCode": "LGA_501",
+        "deliversVicGovFundedKindergartenProgramInYear": true,
+        "participatesInFreeKinder": true,
+        "prePrepConfig": {
+          "rolloutYear": 2032,
+          "rolloutGroup": "METRO",
+          "initialHours": 25,
+          "midStageHours": 25,
+          "finalHours": 30,
+          "midStageYear": 2033,
+          "finalStageYear": 2034
+        }
+      },
+      "application": {
+        "requestedBaseProgramType": "PRE_PREP",
+        "requestedWeeklyHours": 25
+      }
+    },
+    "expectedOutput": {
+      "baseProgramType": "THREE_YEAR_OLD_KINDER",
+      "hoursPerWeekApproved": 15,
+      "freeKinderEligible": true,
+      "eligibilityResults": [
+        {"scheme": "PRE_PREP", "status": "INELIGIBLE"},
+        {"scheme": "FREE_KINDER", "status": "ELIGIBLE"}
+      ]
+    }
+  },
+  {
+    "testName": "Free Kinder Non-Participating Service",
+    "description": "Service that does not participate in Free Kinder",
+    "input": {
+      "fundingYear": 2026,
+      "programYear": 2026,
+      "child": {
+        "personId": "C-101",
+        "dateOfBirth": "2022-03-15",
+        "indigenousStatus": "NONE",
+        "outOfHomeCareStatus": false
+      },
+      "service": {
+        "serviceId": "S-3",
+        "lgaCode": "LGA_301",
+        "deliversVicGovFundedKindergartenProgramInYear": true,
+        "participatesInFreeKinder": false,
+        "prePrepConfig": {
+          "rolloutYear": 2026,
+          "rolloutGroup": "PHASE_1",
+          "initialHours": 20,
+          "midStageHours": 25,
+          "finalHours": 30,
+          "midStageYear": 2029,
+          "finalStageYear": 2031
+        },
+        "feeStructure": {
+          "hourlyRate": 10.0,
+          "weeklyRate": 200.0,
+          "annualRate": 8000.0
+        }
+      },
+      "application": {
+        "requestedBaseProgramType": "PRE_PREP",
+        "requestedWeeklyHours": 20
+      }
+    },
+    "expectedOutput": {
+      "baseProgramType": "PRE_PREP",
+      "priorityGroup": "UNIVERSAL",
+      "hoursPerWeekApproved": 20,
+      "freeKinderEligible": false,
+      "eligibilityResults": [
+        {"scheme": "PRE_PREP", "status": "ELIGIBLE"},
+        {"scheme": "FREE_KINDER", "status": "INELIGIBLE"}
+      ]
+    }
+  },
+  {
+    "testName": "KFS With Free Kinder",
+    "description": "Child eligible for both KFS and Free Kinder",
+    "input": {
+      "fundingYear": 2026,
+      "programYear": 2026,
+      "child": {
+        "personId": "C-202",
+        "dateOfBirth": "2022-03-15",
+        "indigenousStatus": "NONE",
+        "outOfHomeCareStatus": false
+      },
+      "guardians": [
+        {
+          "guardianId": "G-1",
+          "concessions": ["HCC"]
+        }
+      ],
+      "service": {
+        "serviceId": "S-1",
+        "lgaCode": "LGA_301",
+        "deliversVicGovFundedKindergartenProgramInYear": true,
+        "participatesInFreeKinder": true,
+        "deliverySetting": "LONG_DAY_CARE_INTEGRATED",
+        "prePrepConfig": {
+          "rolloutYear": 2026,
+          "rolloutGroup": "PHASE_1",
+          "initialHours": 20,
+          "midStageHours": 25,
+          "finalHours": 30,
+          "midStageYear": 2029,
+          "finalStageYear": 2031
+        }
+      },
+      "application": {
+        "requestedBaseProgramType": "PRE_PREP",
+        "requestedWeeklyHours": 20
+      }
+    },
+    "expectedOutput": {
+      "baseProgramType": "PRE_PREP",
+      "priorityGroup": "UNIVERSAL",
+      "hoursPerWeekApproved": 20,
+      "freeKinderEligible": true,
+      "supplementCodes": ["KFS"],
+      "eligibilityResults": [
+        {"scheme": "PRE_PREP", "status": "ELIGIBLE"},
+        {"scheme": "FREE_KINDER", "status": "ELIGIBLE"},
+        {"scheme": "KFS", "status": "ELIGIBLE"}
+      ]
+    }
+  }
+]

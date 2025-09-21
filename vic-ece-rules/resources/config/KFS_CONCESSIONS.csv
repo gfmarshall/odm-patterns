@@ -1,0 +1,5 @@
+concessionCode,description,validFrom,validTo,priorityGroupCode
+HCC,Health Care Card,2026-01-01,2026-12-31,CONCESSION_CARD
+PCC,Pensioner Concession Card,2026-01-01,2026-12-31,CONCESSION_CARD
+DVA,Department of Veterans Affairs Card,2026-01-01,2026-12-31,CONCESSION_CARD
+ACCS,Additional Child Care Subsidy,2026-01-01,2026-12-31,CONCESSION_CARD

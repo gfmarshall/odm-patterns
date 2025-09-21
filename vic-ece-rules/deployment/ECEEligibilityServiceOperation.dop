@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<com.ibm.rules.studio.model.decisionservice:Operation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ibm.rules.studio.model.decisionservice="http://com.ibm.rules.studio/model/decisionservice.ecore" xmlns:ilog.rules.studio.model.query.extractor="http://ilog.rules.studio/model/query/extractor.ecore" rulesetName="ECEEligibilityRuleset" targetRuleProjectName="vic-ece-rules" usingRuleflow="true">
-  <name>ECEEligibilityServiceOperation</name>
-  <uuid>33a64099-9f21-4b28-9d24-b61f1ae28e50</uuid>
-  <ruleflow href="../rules/funding/eligibility/flows/Main_Eligibility_Flow.rfl#23fb0b10-349d-4785-9de7-75bca489a6f2"/>
-  <extractor xsi:type="ilog.rules.studio.model.query.extractor:QueryExtractor" name="ECEEligibilityServiceOperation_extractor" validator="Default Validator"/>
-  <parameters name="request"/>
-  <parameters xsi:type="com.ibm.rules.studio.model.decisionservice:OperationParameter" name="response" type="funding.EligibilityResponse" direction="OUT"/>
-</com.ibm.rules.studio.model.decisionservice:Operation>
