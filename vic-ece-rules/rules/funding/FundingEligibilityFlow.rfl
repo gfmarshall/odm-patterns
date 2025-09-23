@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.ruleflow:RuleFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.ruleflow="http://ilog.rules.studio/model/ruleflow.ecore">
+  <name>FundingEligibilityFlow</name>
+  <uuid>4b6e89ca-3d18-4a5b-852f-3dcbf4f9bf29</uuid>
+  <locale>en_US</locale>
+  <categories>funding</categories>
+  <rfModel>
+<Ruleflow xmlns="http://schemas.ilog.com/Rules/7.0/Ruleflow">
+  <Body>
+    <TaskList>
+      <Task name="Input Validation">
+        <RuleTask href="eligibility/validation#Input_Validation_Task"/>
+      </Task>
+      <Task name="Age Eligibility">
+        <RuleTask href="eligibility/age#Age_Eligibility_Task"/>
+      </Task>
+      <Task name="Service Eligibility">
+        <RuleTask href="eligibility/service#Service_Eligibility_Task"/>
+      </Task>
+      <Task name="Program Rules">
+        <RuleTask href="eligibility/program#Program_Rules_Task"/>
+      </Task>
+      <Task name="Supplement Eligibility">
+        <RuleTask href="eligibility/supplements#Supplement_Eligibility_Task"/>
+      </Task>
+      <Task name="Output Preparation">
+        <RuleTask href="eligibility#Output_Preparation_Task"/>
+      </Task>
+    </TaskList>
+    <NodeList>
+      <StartNode id="node_0" name="Start"/>
+      <TaskNode id="node_1" name="Input Validation"/>
+      <BranchNode id="node_2" name="Validation Decision"/>
+      <TaskNode id="node_3" name="Age Eligibility"/>
+      <TaskNode id="node_4" name="Service Eligibility"/>
+      <TaskNode id="node_8" name="Program Rules"/>
+      <TaskNode id="node_5" name="Supplement Eligibility"/>
+      <TaskNode id="node_6" name="Output Preparation"/>
+      <StopNode id="node_7" name="Stop"/>
+      <StopNode id="node_9" name="ValidationFailed"/>
+    </NodeList>
+    <TransitionList>
+      <Transition id="link_0_1" source="node_0" target="node_1"/>
+      <Transition id="link_1_2" source="node_1" target="node_2"/>
+      <Transition id="link_2_3" source="node_2" target="node_3">
+        <Condition><![CDATA[processingStatus != "ERROR"]]></Condition>
+      </Transition>
+      <Transition id="link_2_9" source="node_2" target="node_9">
+        <Condition><![CDATA[processingStatus == "ERROR"]]></Condition>
+      </Transition>
+      <Transition id="link_3_4" source="node_3" target="node_4"/>
+      <Transition id="link_4_8" source="node_4" target="node_8"/>
+      <Transition id="link_8_5" source="node_8" target="node_5"/>
+      <Transition id="link_5_6" source="node_5" target="node_6"/>
+      <Transition id="link_6_7" source="node_6" target="node_7"/>
+    </TransitionList>
+  </Body>
+</Ruleflow>
+  </rfModel>
+</ilog.rules.studio.model.ruleflow:RuleFlow>

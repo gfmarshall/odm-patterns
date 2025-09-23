@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.ruleflow:RuleFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.ruleflow="http://ilog.rules.studio/model/ruleflow.ecore">
+  <name>Main_Eligibility_Flow</name>
+  <uuid>23fb0b10-349d-4785-9de7-75bca489a6f2</uuid>
+  <locale>en_US</locale>
+  <categories>funding</categories>
+  <rfModel>
+<Ruleflow xmlns="http://schemas.ilog.com/Rules/7.0/Ruleflow">
+  <Body>
+    <TaskList>
+      <Task name="Validate Inputs">
+        <RuleTask href="eligibility/input_validation#Validate_Inputs_Task"/>
+      </Task>
+      <Task name="Age Eligibility Check">
+        <RuleTask href="eligibility/age/age_eligibility_rules#Age_Eligibility_Task"/>
+      </Task>
+      <Task name="Base Program Resolution">
+        <RuleTask href="eligibility/program/base_program_resolution#Base_Program_Resolution_Task"/>
+      </Task>
+      <Task name="Pre-Prep Rollout Check">
+        <RuleTask href="eligibility/program/prep_rollout_rules#Pre_Prep_Rollout_Task"/>
+      </Task>
+      <Task name="Priority Group Determination">
+        <RuleTask href="eligibility/program/priority_group_rules#Priority_Group_Task"/>
+      </Task>
+      <Task name="ESK Supplement Check">
+        <RuleTask href="eligibility/supplements/esk_supplement_rules#ESK_Supplement_Task"/>
+      </Task>
+      <Task name="Additional Year Check">
+        <RuleTask href="eligibility/supplements/additional_year_rules#Additional_Year_Task"/>
+      </Task>
+      <Task name="KFS Supplement Check">
+        <RuleTask href="eligibility/supplements/kfs_supplement_rules#KFS_Supplement_Task"/>
+      </Task>
+      <Task name="Inclusion Supplement Check">
+        <RuleTask href="eligibility/supplements/inclusion_supplement_rules#Inclusion_Supplement_Task"/>
+      </Task>
+      <Task name="Free Kinder Eligibility">
+        <RuleTask href="eligibility/supplements/free_kinder_rules#Free_Kinder_Task"/>
+      </Task>
+      <Task name="Hours Determination">
+        <RuleTask href="eligibility/program/hours_determination#Hours_Determination_Task"/>
+      </Task>
+      <Task name="Build Response">
+        <RuleTask href="eligibility/service/build_response#Build_Response_Task"/>
+      </Task>
+    </TaskList>
+    <NodeList>
+      <StartNode id="node_1" name="Start"/>
+      <TaskNode id="node_2" name="Validate Inputs"/>
+      <TaskNode id="node_3" name="Age Eligibility Check"/>
+      <TaskNode id="node_4" name="Base Program Resolution"/>
+      <TaskNode id="node_5" name="Pre-Prep Rollout Check"/>
+      <TaskNode id="node_6" name="Priority Group Determination"/>
+      <TaskNode id="node_7" name="ESK Supplement Check"/>
+      <TaskNode id="node_8" name="Additional Year Check"/>
+      <TaskNode id="node_9" name="KFS Supplement Check"/>
+      <TaskNode id="node_10" name="Inclusion Supplement Check"/>
+      <TaskNode id="node_11" name="Free Kinder Eligibility"/>
+      <TaskNode id="node_12" name="Hours Determination"/>
+      <TaskNode id="node_13" name="Build Response"/>
+      <StopNode id="node_14" name="End"/>
+    </NodeList>
+    <TransitionList>
+      <Transition id="link_1_2" source="node_1" target="node_2"/>
+      <Transition id="link_2_3" source="node_2" target="node_3"/>
+      <Transition id="link_3_4" source="node_3" target="node_4"/>
+      <Transition id="link_4_5" source="node_4" target="node_5"/>
+      <Transition id="link_5_6" source="node_5" target="node_6"/>
+      <Transition id="link_6_7" source="node_6" target="node_7"/>
+      <Transition id="link_7_8" source="node_7" target="node_8"/>
+      <Transition id="link_8_9" source="node_8" target="node_9"/>
+      <Transition id="link_9_10" source="node_9" target="node_10"/>
+      <Transition id="link_10_11" source="node_10" target="node_11"/>
+      <Transition id="link_11_12" source="node_11" target="node_12"/>
+      <Transition id="link_12_13" source="node_12" target="node_13"/>
+      <Transition id="link_13_14" source="node_13" target="node_14"/>
+    </TransitionList>
+  </Body>
+</Ruleflow>
+  </rfModel>
+</ilog.rules.studio.model.ruleflow:RuleFlow>
